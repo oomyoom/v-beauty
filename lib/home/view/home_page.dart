@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 2,
-                mainAxisSpacing: 2,
+                mainAxisSpacing: 1,
               ),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
