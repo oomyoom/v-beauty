@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/home/view/components/customappbar.dart';
 import 'package:v_beauty/models/product.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,14 +12,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(appBarHeight),
-        child: CustomAppBar(),
+        child: const CustomAppBar(),
       ),
       body: CustomScrollView(
         slivers: [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.02),
             sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 2,
                 mainAxisSpacing: 1,
@@ -38,7 +40,8 @@ class HomePage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16)),
                       ),
                       subtitle: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        padding: EdgeInsets.symmetric(
+                            vertical: MediaQuery.of(context).size.width * 0.02),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -58,78 +61,5 @@ class HomePage extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class CustomAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: CurvePainter(),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        height: MediaQuery.of(context).size.height * 0.25,
-        child: SafeArea(
-          child: Column(
-            children: [
-              Text('V-Beauty'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontWeight: FontWeight.w400)),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16 * 2),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search...',
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.search),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CurvePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xFFE5C1C5);
-    Path path = Path()
-      ..lineTo(0, size.height * 0.8) // เริ่มต้นจากมุมบนซ้าย
-      ..quadraticBezierTo(size.width / 2, size.height, size.width,
-          size.height * 0.8) // curve กลาง
-      ..lineTo(size.width, 0); // จบที่มุมบนขวา
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
