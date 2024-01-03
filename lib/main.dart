@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/home/view/home_page.dart';
-import 'package:v_beauty/timer/timer.dart';
 import 'package:v_beauty/widgets/bottomtab.dart';
 
 void main() {

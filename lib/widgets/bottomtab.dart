@@ -10,15 +10,22 @@ class BottomTab extends StatefulWidget {
 class _BottomTabState extends State<BottomTab> {
   int _currentIndex = 0;
 
-  final List<Widget> _tabs = [HomePage(), HomePage(), ProfilePage()];
+  final List<Widget> _tabs = [
+    HomePage(),
+    HomePage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Color(0xFFE5C1C5),
         currentIndex: _currentIndex,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
@@ -27,7 +34,7 @@ class _BottomTabState extends State<BottomTab> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );

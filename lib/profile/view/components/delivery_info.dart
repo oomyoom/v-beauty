@@ -24,7 +24,7 @@ class DeliveryInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'ที่อยู่สำหรับจัดส่งสินค้า',
+                  'ที่อยู่',
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!

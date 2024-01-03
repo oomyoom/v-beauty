@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/profile/view/components/personal_edit.dart';
 
 class PersonalInfo extends StatelessWidget {
   const PersonalInfo({
@@ -31,7 +32,13 @@ class PersonalInfo extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PersonalEdit()),
+                      );
+                    },
                     child: Text(
                       'แก้ไข',
                       style: Theme.of(context)

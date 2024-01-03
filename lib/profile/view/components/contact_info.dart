@@ -24,7 +24,7 @@ class ContactInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'ข้อมูลสำหรับติดต่อ',
+                  'ข้อมูลติดต่อ',
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -67,7 +67,7 @@ class ContactInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'เบอร์โทร',
+                  'เบอร์โทรศัพท์',
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
