@@ -14,24 +14,47 @@ List productData = [
       title: 'ลิปสติกสีแดง',
       description: 'ลิป',
       image:
-          'https://img.wongnai.com/p/1920x0/2023/05/08/051680b1d23a4709919b3dfbfdce7e0c.jpg',
+          'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 50),
   Product(
       title: 'ลิปสติกสีชมพู',
       description: 'ลิป',
       image:
-          'https://img.wongnai.com/p/1920x0/2023/05/08/051680b1d23a4709919b3dfbfdce7e0c.jpg',
+          'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 60),
   Product(
       title: 'ลิปสติกสีส้ม',
       description: 'ลิป',
       image:
-          'https://img.wongnai.com/p/1920x0/2023/05/08/051680b1d23a4709919b3dfbfdce7e0c.jpg',
+          'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 70),
   Product(
-      title: 'ลิปสติกสีเหลือง',
+      title: 'ลิปสติกสีเหลืองงงงงงงงงงงงงง',
       description: 'ลิป',
       image:
-          'https://img.wongnai.com/p/1920x0/2023/05/08/051680b1d23a4709919b3dfbfdce7e0c.jpg',
+          'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
+      price: 80)
+];
+
+List productData2 = [
+  Product(
+      title: 'บลัชออนสีแดง',
+      description: 'ลิป',
+      image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
+      price: 50),
+  Product(
+      title: 'บลัชออนสีชมพู',
+      description: 'ลิป',
+      image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
+      price: 60),
+  Product(
+      title: 'บลัชออนสีส้ม',
+      description: 'ลิป',
+      image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
+      price: 70),
+  Product(
+      title: 'บลัชออนสีเหลืองงงงงงงงงงงงงง',
+      description: 'ลิป',
+      image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
       price: 80)
 ];
