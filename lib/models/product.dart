@@ -9,7 +9,7 @@ class Product {
       required this.price});
 }
 
-List productData = [
+List<Product> productData = [
   Product(
       title: 'ลิปสติกสีแดง',
       description: 'ลิป',
@@ -36,7 +36,7 @@ List productData = [
       price: 80)
 ];
 
-List productData2 = [
+List<Product> productData2 = [
   Product(
       title: 'บลัชออนสีแดง',
       description: 'ลิป',

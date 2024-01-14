@@ -11,7 +11,7 @@ class ProfileBanner extends StatelessWidget {
       Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.25,
-        color: Color(0xFFFFC1CC),
+        color: Colors.blueAccent[100],
       ),
       Center(
         child: Container(
@@ -27,7 +27,7 @@ class ProfileBanner extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.45,
           height: MediaQuery.of(context).size.height * 0.25,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
                   fit: BoxFit.cover,
