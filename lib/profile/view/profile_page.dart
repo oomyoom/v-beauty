@@ -75,20 +75,14 @@ class ProfilePage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
               child: ProfileContent(
-                  title: 'ข้อมูลส่วนตัว',
-                  editRoute: '/personaledit',
-                  profileInfoList: personalInfoList)),
+                  title: 'ข้อมูลส่วนตัว', profileInfoList: personalInfoList)),
           SliverToBoxAdapter(
             child: ProfileContent(
-                title: 'ข้อมูลติดต่อ',
-                editRoute: '/personaledit',
-                profileInfoList: contactInfoList),
+                title: 'ข้อมูลติดต่อ', profileInfoList: contactInfoList),
           ),
           SliverToBoxAdapter(
             child: ProfileContent(
-                title: 'ที่อยู่',
-                editRoute: '/personaledit',
-                profileInfoList: deliveryInfoList),
+                title: 'ที่อยู่', profileInfoList: deliveryInfoList),
           )
         ],
       ),

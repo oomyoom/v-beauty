@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/models/user.dart';
+import 'package:v_beauty/profile/view/components/profile_edit.dart';
 import 'package:v_beauty/widgets/section_title.dart';
 
 class ProfileContent extends StatelessWidget {
   const ProfileContent({
-    super.key,    required this.title,
-    required this.editRoute,
+    super.key,
+    required this.title,
     required this.profileInfoList,
   });
 
-    final String title;
-  final String editRoute;
+  final String title;
   final List<ProfileInfoData> profileInfoList;
 
   @override
@@ -27,10 +27,11 @@ class ProfileContent extends StatelessWidget {
             SectionTitle(
                 title: title,
                 press: () {
-                  Navigator.pushNamed(
-                    context,
-                    editRoute
-                  );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => ProfileEditPage(
+                              profileInfoList: profileInfoList))));
                 },
                 labelbutton: 'แก้ไข'),
             for (var profileInfo in profileInfoList)
@@ -47,7 +48,6 @@ class ProfileContent extends StatelessWidget {
     );
   }
 }
-
 
 class ProfileInfo extends StatelessWidget {
   const ProfileInfo({super.key, required this.label, required this.uinfo});
