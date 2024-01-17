@@ -1,76 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/models/user.dart';
-
-class ProfileEditPage extends StatelessWidget {
-  const ProfileEditPage({super.key, required this.profileInfoList});
-
-  final List<ProfileInfoData> profileInfoList;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'แก้ไขข้อมูล',
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-        backgroundColor: Color(0xFFE5C1C5),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.04,
-            ),
-          ),
-          SliverPadding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.08),
-              sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                return ProfileEdit(
-                    label: profileInfoList[index].label,
-                    uinfo: profileInfoList[index].uinfo);
-              }, childCount: profileInfoList.length))),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
-            ),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.12),
-            sliver: SliverToBoxAdapter(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      Size(MediaQuery.of(context).size.width,
-                          MediaQuery.of(context).size.height * 0.06),
-                    ),
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0xFFE5C1C5))),
-                child: Text('แก้ไข'.toUpperCase(),
-                    style: Theme.of(context).textTheme.bodyMedium!),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class ProfileEdit extends StatelessWidget {
-  const ProfileEdit({super.key, required this.label, required this.uinfo});
+  const ProfileEdit(
+      {super.key,
+      required this.label,
+      required this.uinfo,
+      required this.enableTap,
+      required this.onTap,
+      required this.validator});
 
   final String label, uinfo;
+  final bool enableTap;
+  final VoidCallback? onTap;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +22,7 @@ class ProfileEdit extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: () {},
-          child: TextField(
+        TextFormField(
             maxLines: 1,
             controller: _controller,
             decoration: InputDecoration(
@@ -120,11 +60,12 @@ class ProfileEdit extends StatelessWidget {
               contentPadding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.04),
             ),
-          ),
-        ),
+            readOnly: enableTap,
+            validator: validator,
+            onTap: enableTap ? onTap : null),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.03,
-        ),
+        )
       ],
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/models/user.dart';
 import 'package:v_beauty/profile/view/components/profile.dart';
+import 'package:v_beauty/profile/view/components/profile_edit_contact.dart';
+import 'package:v_beauty/profile/view/components/profile_edit_delivery.dart';
+import 'package:v_beauty/profile/view/components/profile_edit_personal.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -37,52 +40,46 @@ class ProfilePage extends StatelessWidget {
           const SliverToBoxAdapter(
             child: ProfileBanner(),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.01),
-              child: Container(
-                padding:
-                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.star_rate_rounded)),
-                        Text('การให้คะแนน')
-                      ],
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.06,
-                    ),
-                    Column(
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.history_rounded)),
-                        Text('ประวัติคำสั่งซื้อ')
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+          const SliverToBoxAdapter(
+            child: ProfileFeatures(),
           ),
           SliverToBoxAdapter(
               child: ProfileContent(
-                  title: 'ข้อมูลส่วนตัว', profileInfoList: personalInfoList)),
+            title: 'ข้อมูลส่วนตัว',
+            profileInfoList: personalInfoList,
+            editRoute: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProfileEditPersonal(
+                          profileInfoList: personalInfoList)));
+            },
+          )),
           SliverToBoxAdapter(
             child: ProfileContent(
-                title: 'ข้อมูลติดต่อ', profileInfoList: contactInfoList),
+              title: 'ข้อมูลติดต่อ',
+              profileInfoList: contactInfoList,
+              editRoute: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfileEditContact(
+                            profileInfoList: contactInfoList)));
+              },
+            ),
           ),
           SliverToBoxAdapter(
             child: ProfileContent(
-                title: 'ที่อยู่', profileInfoList: deliveryInfoList),
+              title: 'ที่อยู่',
+              profileInfoList: deliveryInfoList,
+              editRoute: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfileEditDelivery(
+                            profileInfoList: deliveryInfoList)));
+              },
+            ),
           )
         ],
       ),

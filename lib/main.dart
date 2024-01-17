@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/profile/view/components/profile_edit.dart';
+import 'package:v_beauty/models/user.dart';
+import 'package:v_beauty/profile/view/components/profile_edit_contact.dart';
 import 'package:v_beauty/widgets/bottomtab.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BottomTab(),
+      
     );
   }
 }
