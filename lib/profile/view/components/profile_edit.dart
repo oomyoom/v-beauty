@@ -1,71 +1,295 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_beauty/models/user.dart';
+import 'package:v_beauty/profile/bloc/profile_bloc.dart';
+import 'package:v_beauty/widgets/custom_textformfield.dart';
+class EditProfilePage extends StatelessWidget {
+  EditProfilePage({super.key, required this.editSection});
 
-class ProfileEdit extends StatelessWidget {
-  const ProfileEdit(
-      {super.key,
-      required this.label,
-      required this.uinfo,
-      required this.enableTap,
-      required this.onTap,
-      required this.validator});
+  final String editSection;
+  final _formKey = GlobalKey<FormState>();
 
-  final String label, uinfo;
-  final bool enableTap;
-  final VoidCallback? onTap;
-  final String? Function(String?)? validator;
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController birthDayController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController telController = TextEditingController();
+  final TextEditingController providerController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController zipcodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controller = TextEditingController();
-    _controller.text = uinfo;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-            maxLines: 1,
-            controller: _controller,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.lightBlue,
-                  width: 2.0,
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'แก้ไขข้อมูล',
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
+        elevation: 0,
+        backgroundColor: const Color(0xFFE5C1C5),
+      ),
+      body: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          controllerinitvalue(state);
+          return Form(
+            key: _formKey,
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(MediaQuery.of(context).size.width * 0.04)),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.red,
-                  width: 2.0,
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.08,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: () {
+                      if (editSection == 'personal') {
+                        return PersonalEdit(
+                            firstNameController: firstNameController,
+                            lastNameController: lastNameController,
+                            genderController: genderController,
+                            birthDayController: birthDayController);
+                      } else if (editSection == 'contact') {
+                        return ContactEdit(
+                            emailController: emailController,
+                            telController: telController);
+                      } else if (editSection == 'delivery') {
+                        return DeliveryEdit(
+                            providerController: providerController,
+                            addressController: addressController,
+                            zipcodeController: zipcodeController);
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    }(),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(MediaQuery.of(context).size.width * 0.04)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.grey,
-                  width: 2.0,
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(MediaQuery.of(context).size.width * 0.04)),
-              ),
-              labelText: label,
-              labelStyle: Theme.of(context).textTheme.bodyMedium!,
-              hintText: 'กรอก$label',
-              hintStyle: Theme.of(context).textTheme.bodyMedium!,
-              //border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.04),
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.12),
+                  sliver: SliverToBoxAdapter(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final profileBloc =
+                              BlocProvider.of<ProfileBloc>(context);
+                          profileBloc.add(UpdatePersonalEvent(
+                            newPersonal: Personal(
+                              firstName: firstNameController.text,
+                              lastName: lastNameController.text,
+                              gender: genderController.text,
+                              birthday: birthDayController.text,
+                            ),
+                          ));
+                          Navigator.pop(context);
+                        }
+                      },
+                      style: ButtonStyle(
+                          fixedSize: MaterialStateProperty.all<Size>(
+                            Size(MediaQuery.of(context).size.width,
+                                MediaQuery.of(context).size.height * 0.05),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.all(const Color(0xFFE5C1C5))),
+                      child: Text('บันทึก'.toUpperCase(),
+                          style: Theme.of(context).textTheme.bodyMedium!),
+                    ),
+                  ),
+                )
+              ],
             ),
-            readOnly: enableTap,
-            validator: validator,
-            onTap: enableTap ? onTap : null),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.03,
-        )
+          );
+        },
+      ),
+    );
+  }
+
+  void controllerinitvalue(ProfileState state) {
+    firstNameController.text = state.personal.firstName;
+    lastNameController.text = state.personal.lastName;
+    genderController.text = state.personal.gender;
+    birthDayController.text = state.personal.birthday;
+    emailController.text = state.contact.email;
+    telController.text = state.contact.tel;
+    providerController.text = state.delivery.provider;
+    addressController.text = state.delivery.address;
+    zipcodeController.text = state.delivery.zipcode;
+  }
+}
+
+class PersonalEdit extends StatelessWidget {
+  const PersonalEdit({
+    super.key,
+    required this.firstNameController,
+    required this.lastNameController,
+    required this.genderController,
+    required this.birthDayController,
+  });
+
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
+  final TextEditingController genderController;
+  final TextEditingController birthDayController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomTextFormField(
+          label: 'ชื่อ',
+          controller: firstNameController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกชื่อ';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'นามสกุล',
+          controller: lastNameController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกนามสกุล';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'เพศ',
+          controller: genderController,
+          enableTap: true,
+          onTap: () {},
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกเพศ';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'วันเกิด',
+          controller: birthDayController,
+          enableTap: true,
+          onTap: () {},
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกวันเกิด';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class ContactEdit extends StatelessWidget {
+  const ContactEdit({
+    super.key,
+    required this.emailController,
+    required this.telController,
+  });
+
+  final TextEditingController emailController;
+  final TextEditingController telController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomTextFormField(
+          label: 'อีเมล์',
+          controller: emailController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกอีเมล์';
+            }
+            if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+                .hasMatch(value)) {
+              return 'กรุณากรอกอีเมล์ที่ถูกต้อง';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'เบอร์โทรศัพท์',
+          controller: telController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกเบอร์โทรศัพท์';
+            }
+            if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+              return 'กรุณากรอกเบอร์โทรศัพท์ที่ถูกต้อง';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class DeliveryEdit extends StatelessWidget {
+  const DeliveryEdit({
+    super.key,
+    required this.providerController,
+    required this.addressController,
+    required this.zipcodeController,
+  });
+
+  final TextEditingController providerController;
+  final TextEditingController addressController;
+  final TextEditingController zipcodeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomTextFormField(
+          label: 'บ้านเลขที่,ถนน,ซอย',
+          controller: providerController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกที่อยู่';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'ตำบล/อำเภอ/จังหวัด',
+          controller: addressController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกที่อยู่';
+            }
+            return null;
+          },
+        ),
+        CustomTextFormField(
+          label: 'รหัสไปรษณีย์',
+          controller: zipcodeController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'กรุณากรอกรหัสไปรษณีย์';
+            }
+            return null;
+          },
+        ),
       ],
     );
   }

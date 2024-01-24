@@ -1,5 +1,5 @@
 class ProfileInfoData {
-  final String label, uinfo;
+  String label, uinfo;
 
   ProfileInfoData({
     required this.label,
@@ -25,3 +25,26 @@ List<ProfileInfoData> deliveryInfoList = [
       label: 'ตำบล/อำเภอ/จังหวัด', uinfo: 'กรุงเทพฯ กรุงเทพฯ กรุงเทพฯ'),
   ProfileInfoData(label: 'รหัสไปรษณีย์', uinfo: '1xxxx'),
 ];
+
+class Personal {
+  final String firstName, lastName, gender, birthday;
+
+  Personal(
+      {required this.firstName,
+      required this.lastName,
+      required this.gender,
+      required this.birthday});
+}
+
+class Contact {
+  final String email, tel;
+
+  Contact({required this.email, required this.tel});
+}
+
+class Delivery {
+  final String provider, address, zipcode;
+
+  Delivery(
+      {required this.provider, required this.address, required this.zipcode});
+}

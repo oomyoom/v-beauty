@@ -19,8 +19,8 @@ class ProfileFeatures extends StatelessWidget {
             Column(
               children: [
                 IconButton(
-                    onPressed: () {}, icon: Icon(Icons.star_rate_rounded)),
-                Text('การให้คะแนน')
+                    onPressed: () {}, icon: const Icon(Icons.star_rate_rounded)),
+                const Text('การให้คะแนน')
               ],
             ),
             SizedBox(
@@ -28,8 +28,8 @@ class ProfileFeatures extends StatelessWidget {
             ),
             Column(
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.history_rounded)),
-                Text('ประวัติคำสั่งซื้อ')
+                IconButton(onPressed: () {}, icon: const Icon(Icons.history_rounded)),
+                const Text('ประวัติคำสั่งซื้อ')
               ],
             )
           ],

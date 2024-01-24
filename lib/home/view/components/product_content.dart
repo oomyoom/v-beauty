@@ -46,8 +46,7 @@ class ProductContent extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '฿ ' +
-                                      product[index].price.toStringAsFixed(0),
+                                  '฿ ${product[index].price.toStringAsFixed(0)}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -55,7 +54,7 @@ class ProductContent extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.star_rate_rounded,
                                       color: Colors.yellow,
                                       size: 20,
@@ -65,7 +64,7 @@ class ProductContent extends StatelessWidget {
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!
-                                          .copyWith(color: Color(0xFF615C62)),
+                                          .copyWith(color: const Color(0xFF615C62)),
                                     ),
                                   ],
                                 ),

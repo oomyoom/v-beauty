@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/models/user.dart';
-import 'package:v_beauty/profile/view/components/profile_edit_contact.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_beauty/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/widgets/bottomtab.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'V-Beauty',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'V-Beauty',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const BottomTab(),
       ),
-      home: BottomTab(),
-      
     );
   }
 }

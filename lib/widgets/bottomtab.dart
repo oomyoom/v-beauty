@@ -3,6 +3,8 @@ import 'package:v_beauty/home/view/home_page.dart';
 import 'package:v_beauty/profile/view/profile_page.dart';
 
 class BottomTab extends StatefulWidget {
+  const BottomTab({super.key});
+
   @override
   _BottomTabState createState() => _BottomTabState();
 }
@@ -11,9 +13,9 @@ class _BottomTabState extends State<BottomTab> {
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    HomePage(),
-    HomePage(),
-    ProfilePage(),
+    const HomePage(),
+    const HomePage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -22,7 +24,7 @@ class _BottomTabState extends State<BottomTab> {
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color(0xFFE5C1C5),
+        backgroundColor: const Color(0xFFE5C1C5),
         currentIndex: _currentIndex,
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -31,9 +33,9 @@ class _BottomTabState extends State<BottomTab> {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.build), label: 'Build'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
