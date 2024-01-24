@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/profile/view/components/profile.dart';
 import 'package:v_beauty/profile/view/components/profile_info.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -33,6 +34,12 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.grey[200],
         body: CustomScrollView(
           slivers: [
+            const SliverToBoxAdapter(
+              child: ProfileBanner(),
+            ),
+            const SliverToBoxAdapter(
+              child: ProfileFeatures(),
+            ),
             SliverToBoxAdapter(
                 child: Padding(
               padding: EdgeInsets.only(
