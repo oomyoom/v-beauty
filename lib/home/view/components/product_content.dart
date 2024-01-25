@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/home/view/home_page.dart';
 import 'package:v_beauty/models/product.dart';
+import 'package:v_beauty/product_detail/product_detail.dart';
+import 'package:v_beauty/profile/view/profile_page.dart';
+import 'package:v_beauty/widgets/bottomtab.dart';
 
 class ProductContent extends StatelessWidget {
   const ProductContent({super.key, required this.product});
@@ -11,13 +15,20 @@ class ProductContent extends StatelessWidget {
     return Row(
         children: List.generate(
             product.length,
-            (index) => Padding(
+            (index) => 
+            Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.width * 0.01),
                 child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,MaterialPageRoute(builder: (context) => pf_detailPage(pic : product[index].image,title: product[index].title,price: product[index].price,)),
+                    );
+                  },
                   child: Column(
                     children: [
                       Container(
+    
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.height * 0.15,
                         decoration: BoxDecoration(
