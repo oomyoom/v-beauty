@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:v_beauty/models/user.dart';
+import 'package:v_beauty/profile/models/user.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';

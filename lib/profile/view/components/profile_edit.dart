@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:v_beauty/models/user.dart';
+import 'package:v_beauty/profile/models/user.dart';
 import 'package:v_beauty/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/widgets/custom_textformfield.dart';
+
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({super.key, required this.editSection});
 
@@ -87,14 +88,29 @@ class EditProfilePage extends StatelessWidget {
                         if (_formKey.currentState!.validate()) {
                           final profileBloc =
                               BlocProvider.of<ProfileBloc>(context);
-                          profileBloc.add(UpdatePersonalEvent(
-                            newPersonal: Personal(
-                              firstName: firstNameController.text,
-                              lastName: lastNameController.text,
-                              gender: genderController.text,
-                              birthday: birthDayController.text,
-                            ),
-                          ));
+                          if (editSection == 'personal') {
+                            profileBloc.add(UpdatePersonalEvent(
+                              newPersonal: Personal(
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
+                                gender: genderController.text,
+                                birthday: birthDayController.text,
+                              ),
+                            ));
+                          } else if (editSection == 'contact') {
+                            profileBloc.add(UpdateContactEvent(
+                              newContact: Contact(
+                                  email: emailController.text,
+                                  tel: telController.text),
+                            ));
+                          } else if (editSection == 'delivery') {
+                            profileBloc.add(UpdateDeliveryEvent(
+                              newDelivery: Delivery(
+                                  provider: providerController.text,
+                                  address: addressController.text,
+                                  zipcode: zipcodeController.text),
+                            ));
+                          }
                           Navigator.pop(context);
                         }
                       },
@@ -103,8 +119,8 @@ class EditProfilePage extends StatelessWidget {
                             Size(MediaQuery.of(context).size.width,
                                 MediaQuery.of(context).size.height * 0.05),
                           ),
-                          backgroundColor:
-                              MaterialStateProperty.all(const Color(0xFFE5C1C5))),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xFFE5C1C5))),
                       child: Text('บันทึก'.toUpperCase(),
                           style: Theme.of(context).textTheme.bodyMedium!),
                     ),
