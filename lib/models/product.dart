@@ -12,25 +12,25 @@ class Product {
 List<Product> productData = [
   Product(
       title: 'ลิปสติกสีแดง',
-      description: 'ลิป',
+      description: 'ลิปสติก',
       image:
           'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 50),
   Product(
       title: 'ลิปสติกสีชมพู',
-      description: 'ลิป',
+      description: 'ลิปสติก',
       image:
           'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 60),
   Product(
       title: 'ลิปสติกสีส้ม',
-      description: 'ลิป',
+      description: 'ลิปสติก',
       image:
           'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 70),
   Product(
       title: 'ลิปสติกสีเหลืองงงงงงงงงงงงงง',
-      description: 'ลิป',
+      description: 'ลิปสติก',
       image:
           'https://images.pexels.com/photos/1625037/pexels-photo-1625037.jpeg',
       price: 80)
@@ -39,22 +39,22 @@ List<Product> productData = [
 List<Product> productData2 = [
   Product(
       title: 'บลัชออนสีแดง',
-      description: 'ลิป',
+      description: 'บลัชออน',
       image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
       price: 50),
   Product(
       title: 'บลัชออนสีชมพู',
-      description: 'ลิป',
+      description: 'บลัชออน',
       image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
       price: 60),
   Product(
       title: 'บลัชออนสีส้ม',
-      description: 'ลิป',
+      description: 'บลัชออน',
       image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
       price: 70),
   Product(
       title: 'บลัชออนสีเหลืองงงงงงงงงงงงงง',
-      description: 'ลิป',
+      description: 'บลัชออน',
       image: 'https://live.staticflickr.com/5297/5457270373_97c0b85da3_b.jpg',
       price: 80)
 ];

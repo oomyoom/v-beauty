@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/cart/view/cart_page.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -15,13 +16,29 @@ class CustomAppBar extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Text('V-Beauty'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontWeight: FontWeight.w400)),
+              AppBar(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CartPage()));
+                    },
+                  )
+                ],
+                title: Text('V-Beauty'.toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(fontWeight: FontWeight.w400)),
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
+                height: MediaQuery.of(context).size.height * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
