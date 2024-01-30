@@ -52,26 +52,31 @@ class PersonalInfo extends StatelessWidget {
             labelbutton: 'แก้ไข'),
         BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            return Column(
-              children: [
-                ProfileInfo(
-                  label: 'ชื่อ',
-                  uinfo: state.personal.firstName,
-                ),
-                ProfileInfo(
-                  label: 'นามสกุล',
-                  uinfo: state.personal.lastName,
-                ),
-                ProfileInfo(
-                  label: 'เพศ',
-                  uinfo: state.personal.gender,
-                ),
-                ProfileInfo(
-                  label: 'วันเกิด',
-                  uinfo: state.personal.birthday,
-                ),
-              ],
-            );
+            if (state is ProfileLoading) {
+              return const CircularProgressIndicator();
+            } else if (state is ProfileLoaded) {
+              return Column(
+                children: [
+                  ProfileInfo(
+                    label: 'ชื่อ',
+                    uinfo: state.profile.personal.firstName,
+                  ),
+                  ProfileInfo(
+                    label: 'นามสกุล',
+                    uinfo: state.profile.personal.lastName,
+                  ),
+                  ProfileInfo(
+                    label: 'เพศ',
+                    uinfo: state.profile.personal.gender,
+                  ),
+                  ProfileInfo(
+                    label: 'วันเกิด',
+                    uinfo: state.profile.personal.birthday,
+                  ),
+                ],
+              );
+            }
+            return Container();
           },
         ),
         SizedBox(
@@ -104,18 +109,23 @@ class ContactInfo extends StatelessWidget {
             labelbutton: 'แก้ไข'),
         BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            return Column(
-              children: [
-                ProfileInfo(
-                  label: 'อีเมล์',
-                  uinfo: state.contact.email,
-                ),
-                ProfileInfo(
-                  label: 'เบอร์โทรศัพท์',
-                  uinfo: state.contact.tel,
-                ),
-              ],
-            );
+            if (state is ProfileLoading) {
+              return const CircularProgressIndicator();
+            } else if (state is ProfileLoaded) {
+              return Column(
+                children: [
+                  ProfileInfo(
+                    label: 'อีเมล์',
+                    uinfo: state.profile.contact.email,
+                  ),
+                  ProfileInfo(
+                    label: 'เบอร์โทรศัพท์',
+                    uinfo: state.profile.contact.tel,
+                  ),
+                ],
+              );
+            }
+            return Container();
           },
         ),
         SizedBox(
@@ -148,22 +158,27 @@ class DeliveryInfo extends StatelessWidget {
             labelbutton: 'แก้ไข'),
         BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
-            return Column(
-              children: [
-                ProfileInfo(
-                  label: 'บ้านเลขที่,ถนน,ซอย',
-                  uinfo: state.delivery.provider,
-                ),
-                ProfileInfo(
-                  label: 'ตำบล/อำเภอ/จังหวัด',
-                  uinfo: state.delivery.address,
-                ),
-                ProfileInfo(
-                  label: 'รหัสไปรษณีย์',
-                  uinfo: state.delivery.zipcode,
-                ),
-              ],
-            );
+            if (state is ProfileLoading) {
+              return const CircularProgressIndicator();
+            } else if (state is ProfileLoaded) {
+              return Column(
+                children: [
+                  ProfileInfo(
+                    label: 'บ้านเลขที่,ถนน,ซอย',
+                    uinfo: state.profile.delivery.provider,
+                  ),
+                  ProfileInfo(
+                    label: 'ตำบล/อำเภอ/จังหวัด',
+                    uinfo: state.profile.delivery.address,
+                  ),
+                  ProfileInfo(
+                    label: 'รหัสไปรษณีย์',
+                    uinfo: state.profile.delivery.zipcode,
+                  ),
+                ],
+              );
+            }
+            return Container();
           },
         ),
         SizedBox(

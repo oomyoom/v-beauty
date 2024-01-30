@@ -1,17 +1,27 @@
 part of 'profile_bloc.dart';
 
-class ProfileState {
-  final Personal personal;
-  final Contact contact;
-  final Delivery delivery;
-
-  ProfileState(this.personal, this.contact, this.delivery);
+abstract class ProfileState extends Equatable {
+  @override
+  List<Object> get props => [];
 }
 
-class ProfileInitial extends ProfileState {
-  ProfileInitial(super.personal, super.contact, super.delivery);
-}
+class ProfileInitial extends ProfileState {}
+class ProfileLoading extends ProfileState {}
+class ProfileLoaded extends ProfileState {
+  final UserProfile profile;
 
-class ProfileUpdatedState extends ProfileState {
-  ProfileUpdatedState(super.personal, super.contact, super.delivery);
+  ProfileLoaded(this.profile);
+
+  @override
+  List<Object> get props => [profile];
+}
+class ProfileError extends ProfileState {}
+
+class ProfileUpdated extends ProfileState {
+  final UserProfile profile;
+
+  ProfileUpdated(this.profile);
+
+  @override
+  List<Object> get props => [profile];
 }

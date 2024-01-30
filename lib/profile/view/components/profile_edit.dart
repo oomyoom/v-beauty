@@ -35,115 +35,124 @@ class EditProfilePage extends StatelessWidget {
         elevation: 0,
         backgroundColor: const Color(0xFFE5C1C5),
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (context, state) {
+          if (state is ProfileUpdated) {
+            context.read<ProfileBloc>().add(ProfileLoad());
+            Navigator.pop(context);
+          }
+        },
         builder: (context, state) {
-          controllerinitvalue(state);
-          return Form(
-            key: _formKey,
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.08,
-                  ),
-                  sliver: SliverToBoxAdapter(
-                    child: () {
-                      if (editSection == 'personal') {
-                        return PersonalEdit(
-                            firstNameController: firstNameController,
-                            lastNameController: lastNameController,
-                            genderController: genderController,
-                            birthDayController: birthDayController);
-                      } else if (editSection == 'contact') {
-                        return ContactEdit(
-                            emailController: emailController,
-                            telController: telController);
-                      } else if (editSection == 'delivery') {
-                        return DeliveryEdit(
-                            providerController: providerController,
-                            addressController: addressController,
-                            zipcodeController: zipcodeController);
-                      } else {
-                        return const CircularProgressIndicator();
-                      }
-                    }(),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                ),
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.12),
-                  sliver: SliverToBoxAdapter(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          final profileBloc =
-                              BlocProvider.of<ProfileBloc>(context);
-                          if (editSection == 'personal') {
-                            profileBloc.add(UpdatePersonalEvent(
-                              newPersonal: Personal(
-                                firstName: firstNameController.text,
-                                lastName: lastNameController.text,
-                                gender: genderController.text,
-                                birthday: birthDayController.text,
-                              ),
-                            ));
-                          } else if (editSection == 'contact') {
-                            profileBloc.add(UpdateContactEvent(
-                              newContact: Contact(
-                                  email: emailController.text,
-                                  tel: telController.text),
-                            ));
-                          } else if (editSection == 'delivery') {
-                            profileBloc.add(UpdateDeliveryEvent(
-                              newDelivery: Delivery(
-                                  provider: providerController.text,
-                                  address: addressController.text,
-                                  zipcode: zipcodeController.text),
-                            ));
-                          }
-                          Navigator.pop(context);
-                        }
-                      },
-                      style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all<Size>(
-                            Size(MediaQuery.of(context).size.width,
-                                MediaQuery.of(context).size.height * 0.05),
-                          ),
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color(0xFFE5C1C5))),
-                      child: Text('บันทึก'.toUpperCase(),
-                          style: Theme.of(context).textTheme.bodyMedium!),
+          context.read<ProfileBloc>().add(ProfileLoad());
+          if (state is ProfileLoaded) {
+            controllerinitvalue(state);
+            return Form(
+              key: _formKey,
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
                     ),
                   ),
-                )
-              ],
-            ),
-          );
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.08,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: () {
+                        if (editSection == 'personal') {
+                          return PersonalEdit(
+                              firstNameController: firstNameController,
+                              lastNameController: lastNameController,
+                              genderController: genderController,
+                              birthDayController: birthDayController);
+                        } else if (editSection == 'contact') {
+                          return ContactEdit(
+                              emailController: emailController,
+                              telController: telController);
+                        } else if (editSection == 'delivery') {
+                          return DeliveryEdit(
+                              providerController: providerController,
+                              addressController: addressController,
+                              zipcodeController: zipcodeController);
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      }(),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.12),
+                    sliver: SliverToBoxAdapter(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            final profileBloc =
+                                BlocProvider.of<ProfileBloc>(context);
+                            if (editSection == 'personal') {
+                              profileBloc.add(UpdatePersonalEvent(
+                                Personal(
+                                  firstName: firstNameController.text,
+                                  lastName: lastNameController.text,
+                                  gender: genderController.text,
+                                  birthday: birthDayController.text,
+                                ),
+                              ));
+                            } else if (editSection == 'contact') {
+                              profileBloc.add(UpdateContactEvent(
+                                Contact(
+                                    email: emailController.text,
+                                    tel: telController.text),
+                              ));
+                            } else if (editSection == 'delivery') {
+                              profileBloc.add(UpdateDeliveryEvent(
+                                Delivery(
+                                    provider: providerController.text,
+                                    address: addressController.text,
+                                    zipcode: zipcodeController.text),
+                              ));
+                            }
+                          }
+                        },
+                        style: ButtonStyle(
+                            fixedSize: MaterialStateProperty.all<Size>(
+                              Size(MediaQuery.of(context).size.width,
+                                  MediaQuery.of(context).size.height * 0.05),
+                            ),
+                            backgroundColor: MaterialStateProperty.all(
+                                const Color(0xFFE5C1C5))),
+                        child: Text('บันทึก'.toUpperCase(),
+                            style: Theme.of(context).textTheme.bodyMedium!),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+          return Container();
         },
       ),
     );
   }
 
-  void controllerinitvalue(ProfileState state) {
-    firstNameController.text = state.personal.firstName;
-    lastNameController.text = state.personal.lastName;
-    genderController.text = state.personal.gender;
-    birthDayController.text = state.personal.birthday;
-    emailController.text = state.contact.email;
-    telController.text = state.contact.tel;
-    providerController.text = state.delivery.provider;
-    addressController.text = state.delivery.address;
-    zipcodeController.text = state.delivery.zipcode;
+  void controllerinitvalue(ProfileLoaded state) {
+    firstNameController.text = state.profile.personal.firstName;
+    lastNameController.text = state.profile.personal.lastName;
+    genderController.text = state.profile.personal.gender;
+    birthDayController.text = state.profile.personal.birthday;
+    emailController.text = state.profile.contact.email;
+    telController.text = state.profile.contact.tel;
+    providerController.text = state.profile.delivery.provider;
+    addressController.text = state.profile.delivery.address;
+    zipcodeController.text = state.profile.delivery.zipcode;
   }
 }
 

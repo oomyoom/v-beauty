@@ -20,3 +20,11 @@ class Delivery {
   Delivery(
       {required this.provider, required this.address, required this.zipcode});
 }
+
+class UserProfile {
+  final Personal personal;
+  final Contact contact;
+  final Delivery delivery;
+
+  UserProfile({required this.personal, required this.contact, required this.delivery});
+}

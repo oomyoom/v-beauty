@@ -15,7 +15,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProfileBloc>(
-          create: (context) => ProfileBloc(),
+          create: (context) {
+            final profileBloc = ProfileBloc();
+            profileBloc.add(ProfileLoad()); // Dispatch the ProfileLoad event
+            return profileBloc;
+          },
         ),
       ],
       child: MaterialApp(
