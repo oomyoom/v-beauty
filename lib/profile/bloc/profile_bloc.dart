@@ -11,12 +11,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           firstName: 'TANAKORN',
           lastName: 'TOSANGUAN',
           gender: 'ชาย',
-          birthday: 'DD/MM/YYYY'),
+          birthday: 'YYYY-MM-DD'),
       contact: Contact(email: 'oomyoom@xxx.com', tel: '0900000000'),
       delivery: Delivery(
-          provider: 'provider',
-          address: 'address',
-          zipcode: 'zipcode')); // Mock initial profile
+          provider: 'PROVIDER',
+          address: 'ADDRESS',
+          zipcode: 'ZIPCODE')); // Mock initial profile
 
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileLoad>((event, emit) async {
@@ -42,6 +42,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           contact: profile.contact,
           delivery: event.newDelivery);
       emit(ProfileUpdated(profile));
+    });
+    on<ProfileEdit>((event, emit) async {
+      emit(ProfileLoaded(profile));
     });
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/home/view/home_page.dart';
-import 'package:v_beauty/profile/view/profile_page.dart';
+import 'package:v_beauty/profile/view/pages/profile_page.dart';
 
 class BottomTab extends StatefulWidget {
   const BottomTab({super.key});
