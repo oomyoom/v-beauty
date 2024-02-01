@@ -23,11 +23,13 @@ class _BottomTabState extends State<BottomTab> {
     return Scaffold(
       body: _tabs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 1,
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFFE5C1C5),
         currentIndex: _currentIndex,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
+        selectedItemColor: Colors.pink[700],
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         onTap: (int index) {
           setState(() {
             _currentIndex = index;

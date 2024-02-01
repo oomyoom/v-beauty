@@ -53,6 +53,7 @@ class EditProfilePage extends StatelessWidget {
                 TextEditingController(text: state.profile.delivery.address);
             final TextEditingController zipcodeController =
                 TextEditingController(text: state.profile.delivery.zipcode);
+
             return Form(
               key: _formKey,
               child: CustomScrollView(

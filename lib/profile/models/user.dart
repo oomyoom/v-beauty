@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Personal {
   final String firstName, lastName, gender, birthday;
 
@@ -22,9 +24,14 @@ class Delivery {
 }
 
 class UserProfile {
+  final File? image;
   final Personal personal;
   final Contact contact;
   final Delivery delivery;
 
-  UserProfile({required this.personal, required this.contact, required this.delivery});
+  UserProfile(
+      {required this.personal,
+      required this.contact,
+      required this.delivery,
+      required this.image});
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:v_beauty/profile/bloc/profile_bloc.dart';
 
 class ProfileBanner extends StatelessWidget {
   const ProfileBanner({
@@ -23,18 +26,49 @@ class ProfileBanner extends StatelessWidget {
           ),
         ),
       ),
-      Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.45,
-          height: MediaQuery.of(context).size.height * 0.25,
-          decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://cdn.discordapp.com/attachments/808022917489098774/1191821888230543421/108538996_p0.png?ex=65a6d5a1&is=659460a1&hm=dbadb3055fe275ef2f9927fdcdc750f100b6c9a74311a702298fbd861e33b53c&jpg'))),
-        ),
-      ),
+      BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoaded) {
+            return InkWell(
+              onTap: () {
+                context.read<ProfileBloc>().add(ProfilePickImage());
+              },
+              child: Stack(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.45,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      child: CircleAvatar(
+                        radius: MediaQuery.of(context).size.width * 0.1,
+                        backgroundColor: Colors.pink[50],
+                        foregroundImage: state.profile.image != null
+                            ? FileImage(state.profile.image!)
+                            : null,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: MediaQuery.of(context).size.width * 0.29,
+                    bottom: MediaQuery.of(context).size.height * 0.032,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      height: MediaQuery.of(context).size.height * 0.04,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.photo_camera,
+                          size: MediaQuery.of(context).size.width * 0.04),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          return const CircularProgressIndicator();
+        },
+      )
     ]);
   }
 }

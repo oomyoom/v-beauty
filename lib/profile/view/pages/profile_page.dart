@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
-          elevation: 0,
+          elevation: 1,
           backgroundColor: const Color(0xFFE5C1C5),
           actions: [
             Padding(

@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
             children: [
               AppBar(
                 elevation: 0,
-                backgroundColor: Colors.transparent,
+                backgroundColor: const Color(0xFFE5C1C5),
                 centerTitle: true,
                 actions: [
                   IconButton(
