@@ -32,7 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
     on<UpdatePersonalEvent>((event, emit) async {
       profile = UserProfile(
-          image: null,
+          image: profile.image,
           personal: event.newPersonal,
           contact: profile.contact,
           delivery: profile.delivery);
@@ -40,7 +40,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
     on<UpdateContactEvent>((event, emit) async {
       profile = UserProfile(
-          image: null,
+          image: profile.image,
           personal: profile.personal,
           contact: event.newContact,
           delivery: profile.delivery);
@@ -48,7 +48,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
     on<UpdateDeliveryEvent>((event, emit) async {
       profile = UserProfile(
-          image: null,
+          image: profile.image,
           personal: profile.personal,
           contact: profile.contact,
           delivery: event.newDelivery);

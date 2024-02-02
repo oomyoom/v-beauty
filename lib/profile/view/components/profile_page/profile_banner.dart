@@ -29,40 +29,46 @@ class ProfileBanner extends StatelessWidget {
       BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is ProfileLoaded) {
-            return InkWell(
-              onTap: () {
-                context.read<ProfileBloc>().add(ProfilePickImage());
-              },
-              child: Stack(
-                children: [
-                  Center(
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: CircleAvatar(
-                        radius: MediaQuery.of(context).size.width * 0.1,
-                        backgroundColor: Colors.pink[50],
-                        foregroundImage: state.profile.image != null
-                            ? FileImage(state.profile.image!)
-                            : null,
+            return Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.45,
+                height: MediaQuery.of(context).size.height * 0.25,
+                child: InkWell(
+                  onTap: () {
+                    context.read<ProfileBloc>().add(ProfilePickImage());
+                  },
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          child: CircleAvatar(
+                            radius: MediaQuery.of(context).size.width * 0.1,
+                            backgroundColor: Colors.pink[50],
+                            foregroundImage: state.profile.image != null
+                                ? FileImage(state.profile.image!)
+                                : null,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    right: MediaQuery.of(context).size.width * 0.29,
-                    bottom: MediaQuery.of(context).size.height * 0.032,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.08,
-                      height: MediaQuery.of(context).size.height * 0.04,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        shape: BoxShape.circle,
+                      Positioned(
+                        right: MediaQuery.of(context).size.width * 0.02,
+                        bottom: MediaQuery.of(context).size.height * 0.032,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.04,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.photo_camera,
+                              size: MediaQuery.of(context).size.width * 0.04),
+                        ),
                       ),
-                      child: Icon(Icons.photo_camera,
-                          size: MediaQuery.of(context).size.width * 0.04),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           }
