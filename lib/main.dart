@@ -1,111 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './bloc/bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v_beauty/features/auth/ui/auth_screen.dart';
+import 'package:v_beauty/features/splash/splash_screen.dart';
+import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
+import 'package:v_beauty/repositories/product_api_repo.dart';
+import 'package:v_beauty/widget/bottom_tab.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CounterBloc(),
-      child: MaterialApp(
-        title: 'Counter App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: HomePage(),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<CounterBloc, CounterState>(builder: (context, state) {
-        return Column(
-          //crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              state.counter.toString(),
-              style: const TextStyle(fontSize: 30),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () => BlocProvider.of<CounterBloc>(context)
-                        .add(IncrementEvent()),
-                    child: const Icon(Icons.add)),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                    onPressed: () => BlocProvider.of<CounterBloc>(context)
-                        .add(DecrementEvent()),
-                    child: const Icon(Icons.remove))
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SecondPage()));
-              },
-              child: Container(
-                width: 138,
-                height: 35,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey,
-                ),
-                child: const Center(
-                    child: Text(
-                  "click",
-                  style: TextStyle(color: Colors.white),
-                )),
-              ),
-            )
-          ],
-        );
-      }),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final CounterBloc counterBloc = BlocProvider.of<CounterBloc>(context);
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Blocs"),
-          leading: BackButton(
-            onPressed: () => Navigator.pop(context),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final productRepository =
+      AllProductRepository(); // Initialize your repository here
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AllProductRepository>(
+            create: (_) => productRepository),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => HomeproductBloc(productRepository),
+            child: BottomTab(token: prefs.get('token')),
           ),
-        ),
-        body: BlocBuilder(
-            bloc: counterBloc,
-            builder: (context, state) {
-              return Center(
-                child: Text(
-                  counterBloc.state.counter.toString(),
-                  style: const TextStyle(fontSize: 30),
-                ),
-              );
-            }));
+          // BlocProvider(
+          //   create: (create) => CategoryBloc(productRepository),
+          // ),
+        ],
+        child: MyAppView(token: prefs.getString('token')),
+      ),
+    ),
+  );
+}
+
+class MyAppView extends StatelessWidget {
+  var token;
+  MyAppView({@required this.token, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Firebase Auth',
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+            background: Colors.white,
+            onBackground: Colors.black,
+            primary: Color.fromRGBO(206, 147, 216, 1),
+            onPrimary: Colors.black,
+            secondary: Color.fromRGBO(244, 143, 177, 1),
+            onSecondary: Colors.white,
+            tertiary: Color.fromRGBO(255, 204, 128, 1),
+            error: Colors.red,
+            outline: Color(0xFF424242)),
+      ),
+      home: SplashScreen(
+        token: token,
+      )
+      // home: SplashScreen(
+      //   token: token,
+      // ),
+    );
   }
 }
