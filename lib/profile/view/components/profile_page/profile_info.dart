@@ -21,9 +21,12 @@ class ProfileInfo extends StatelessWidget {
               .bodyLarge!
               .copyWith(color: const Color(0xFF615C62)),
         ),
-        Text(
-          uinfo,
-          style: Theme.of(context).textTheme.bodyLarge!,
+        Flexible(
+          child: Text(
+            uinfo,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyLarge!,
+          ),
         ),
       ],
     );

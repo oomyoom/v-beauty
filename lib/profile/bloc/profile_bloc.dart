@@ -24,7 +24,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       delivery: Delivery(
           provider: 'PROVIDER',
           address: 'ADDRESS',
-          zipcode: 'ZIPCODE')); // Mock initial profile
+          zipcode: '11111')); // Mock initial profile
 
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileLoad>((event, emit) async {

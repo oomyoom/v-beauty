@@ -6,6 +6,7 @@ abstract class ProfileState extends Equatable {
 }
 
 class ProfileInitial extends ProfileState {}
+
 class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
@@ -16,6 +17,7 @@ class ProfileLoaded extends ProfileState {
   @override
   List<Object> get props => [profile];
 }
+
 class ProfileError extends ProfileState {}
 
 class ProfileUpdated extends ProfileState {
