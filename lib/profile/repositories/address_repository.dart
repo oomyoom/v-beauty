@@ -34,6 +34,16 @@ class AddressRepository {
     return districts;
   }
 
+  Future<List<District>> searchDistrictById(String searchName) async {
+    // ได้รับ list ของ SubDistricts จาก JSON
+    List<District> districts = await getDistricts();
+    // กรอง SubDistricts ตามชื่อ
+    List<District> filteredDistricts = districts.where((district) => 
+      district.id.toLowerCase().contains(searchName.toLowerCase())
+    ).toList();
+    return filteredDistricts;
+  }
+
   Future<List<Province>> getProvinces() async {
     final String response =
         await rootBundle.loadString('assets/address/provinces.json');
@@ -43,6 +53,16 @@ class AddressRepository {
     return provinces;
   }
 
+  Future<List<Province>> searchProvinceById(String searchName) async {
+    // ได้รับ list ของ SubDistricts จาก JSON
+    List<Province> province = await getProvinces();
+    // กรอง SubDistricts ตามชื่อ
+    List<Province> filteredProvinces = province.where((province) => 
+      province.id.toLowerCase().contains(searchName.toLowerCase())
+    ).toList();
+    return filteredProvinces;
+  }
+
   Future<List<Zipcode>> getZipcodes() async {
     final String response =
         await rootBundle.loadString('assets/address/zipcodes.json');
@@ -50,6 +70,16 @@ class AddressRepository {
     final List<Zipcode> zipcodes =
         dataList.map((data) => Zipcode.fromJson(data)).toList();
     return zipcodes;
+  }
+
+  Future<List<Zipcode>> searchZipcodeById(String searchName) async {
+    // ได้รับ list ของ SubDistricts จาก JSON
+    List<Zipcode> zipcodes = await getZipcodes();
+    // กรอง SubDistricts ตามชื่อ
+    List<Zipcode> filteredZipcodes = zipcodes.where((zipcode) => 
+      zipcode.sdid.toLowerCase().contains(searchName.toLowerCase())
+    ).toList();
+    return filteredZipcodes;
   }
 
   // Add methods for create, update, and delete operations here
