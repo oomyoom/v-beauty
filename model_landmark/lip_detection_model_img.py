@@ -1,3 +1,4 @@
+import base64
 import io
 
 import numpy as np
@@ -54,14 +55,17 @@ def process_image_api():
     image =cv.imdecode(np.frombuffer(image_file.read(),np.uint8),cv.IMREAD_UNCHANGED)
     processed_image = process_image(image,type='lipstick')
     _, img_encoded = cv.imencode('.jpg',processed_image)
-    img_encoded = img_encoded.tobytes()
-    return send_file(
-        io.BytesIO(img_encoded),
-        mimetype='image/jpeg',
-        as_attachment=True,
-        download_name='processed_image.jpg'
+    # img_encoded = img_encoded.tobytes()
+    # return send_file(
+    #     io.BytesIO(img_encoded),
+    #     mimetype='image/jpeg',
+    #     as_attachment=True,
+    #     download_name='processed_image.jpg'
+    #
+    # )
+    img_base64 = base64.b64encode(img_encoded).decode('utf-8')
 
-    )
+    return jsonify({'processed_image': img_base64})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port = 5000,debug=False)

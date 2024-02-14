@@ -30,7 +30,7 @@ class FaceMeshDetector():
         faces = []
         if self.results.multi_face_landmarks:
             for faceLms in self.results.multi_face_landmarks:
-                self.mpDraw.draw_landmarks(self.img_show, faceLms, self.mpFaceMesh.FACEMESH_FACE_OVAL)
+                # self.mpDraw.draw_landmarks(self.img_show, faceLms, self.mpFaceMesh.FACEMESH_FACE_OVAL)
                 face = []
                 for id, lm in enumerate(faceLms.landmark):
                     ih, iw, ic = self.img_show.shape
