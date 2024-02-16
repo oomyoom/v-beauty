@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_beauty/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/profile/view/components/profile.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -31,51 +33,61 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.grey[200],
-        body: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(
-              child: ProfileBanner(),
-            ),
-            const SliverToBoxAdapter(
-              child: ProfileFeatures(),
-            ),
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width * 0.02),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.04),
-                color: Colors.white,
-                child: const PersonalInfo(),
-              ),
-            )),
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width * 0.02),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.04),
-                color: Colors.white,
-                child: const ContactInfo(),
-              ),
-            )),
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.width * 0.02),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.04),
-                color: Colors.white,
-                child: const DeliveryInfo(),
-              ),
-            )),
-          ],
+        body: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoading) {
+              const Center(child: CircularProgressIndicator());
+            }
+            if (state is ProfileLoaded) {
+              return CustomScrollView(
+                slivers: [
+                  const SliverToBoxAdapter(
+                    child: ProfileBanner(),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: ProfileFeatures(),
+                  ),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.02),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.04),
+                      color: Colors.white,
+                      child: const PersonalInfo(),
+                    ),
+                  )),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.02),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.04),
+                      color: Colors.white,
+                      child: const ContactInfo(),
+                    ),
+                  )),
+                  SliverToBoxAdapter(
+                      child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.width * 0.02),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.04),
+                      color: Colors.white,
+                      child: const DeliveryInfo(),
+                    ),
+                  )),
+                ],
+              );
+            }
+            return Container();
+          },
         ));
   }
 }

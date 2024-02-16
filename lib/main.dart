@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/profile/bloc/profile_bloc.dart';
+import 'package:v_beauty/profile/repositories/user_repository.dart';
 import 'package:v_beauty/widgets/bottomtab.dart';
 
 void main() {
@@ -12,14 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userRepository = UserRepository();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<ProfileBloc>(
-          create: (context) {
-            final profileBloc = ProfileBloc();
-            profileBloc.add(ProfileLoad()); // Dispatch the ProfileLoad event
-            return profileBloc;
-          },
+          create: (context) => ProfileBloc(userRepository: userRepository)
+            ..add(ProfileLoad()), // Dispatch the ProfileLoad event
         ),
       ],
       child: MaterialApp(

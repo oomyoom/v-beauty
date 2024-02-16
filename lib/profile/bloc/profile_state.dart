@@ -18,7 +18,14 @@ class ProfileLoaded extends ProfileState {
   List<Object> get props => [profile];
 }
 
-class ProfileError extends ProfileState {}
+class ProfileError extends ProfileState {
+  final String error;
+
+  ProfileError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
 
 class ProfileUpdated extends ProfileState {
   final UserProfile profile;

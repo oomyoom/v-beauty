@@ -34,6 +34,11 @@ class EditProfilePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if (state is ProfileLoading) {
+            const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           if (state is ProfileLoaded) {
             final TextEditingController firstNameController =
                 TextEditingController(text: state.profile.personal.firstName);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:typed_data';
 
 import 'package:v_beauty/profile/bloc/profile_bloc.dart';
 
@@ -47,7 +48,8 @@ class ProfileBanner extends StatelessWidget {
                             radius: MediaQuery.of(context).size.width * 0.1,
                             backgroundColor: Colors.pink[50],
                             foregroundImage: state.profile.image != null
-                                ? FileImage(state.profile.image!)
+                                ? MemoryImage(
+                                    Uint8List.fromList(state.profile.image!))
                                 : null,
                           ),
                         ),
@@ -72,7 +74,7 @@ class ProfileBanner extends StatelessWidget {
               ),
             );
           }
-          return const CircularProgressIndicator();
+          return Container();
         },
       )
     ]);

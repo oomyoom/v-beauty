@@ -6,56 +6,61 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_beauty/profile/models/user.dart';
+import 'package:v_beauty/profile/repositories/user_repository.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  final UserRepository userRepository;
   final ImagePicker _picker = ImagePicker();
 
-  UserProfile profile = UserProfile(
-      image: null,
-      personal: Personal(
-          firstName: 'TANAKORN',
-          lastName: 'TOSANGUAN',
-          gender: 'ชาย',
-          birthday: 'YYYY-MM-DD'),
-      contact: Contact(email: 'oomyoom@xxx.com', tel: '0900000000'),
-      delivery: Delivery(
-          provider: 'PROVIDER',
-          address: 'ADDRESS',
-          zipcode: '11111')); // Mock initial profile
+  // UserProfile profile = UserProfile(
+  //     image: null,
+  //     personal: Personal(
+  //         firstName: 'TANAKORN',
+  //         lastName: 'TOSANGUAN',
+  //         gender: 'ชาย',
+  //         birthday: 'YYYY-MM-DD'),
+  //     contact: Contact(email: 'oomyoom@xxx.com', tel: '0900000000'),
+  //     delivery: Delivery(
+  //         provider: 'PROVIDER',
+  //         address: 'ADDRESS',
+  //         zipcode: '11111')); // Mock initial profile
 
-  ProfileBloc() : super(ProfileInitial()) {
+  ProfileBloc({required this.userRepository}) : super(ProfileInitial()) {
     on<ProfileLoad>((event, emit) async {
-      emit(ProfileLoaded(profile));
+      emit(ProfileLoading()); // แสดงสถานะการโหลด
+      try {
+        final profile = await userRepository.getUser();
+        emit(ProfileLoaded(profile)); // โหลดสำเร็จ, ส่งข้อมูล profile
+      } catch (error) {
+        emit(ProfileError(error.toString())); // มีข้อผิดพลาดเกิดขึ้น
+      }
     });
     on<UpdatePersonalEvent>((event, emit) async {
-      profile = UserProfile(
-          image: profile.image,
-          personal: event.newPersonal,
-          contact: profile.contact,
-          delivery: profile.delivery);
-      emit(ProfileUpdated(profile));
+      await userRepository.updatePersonalInfo(event.newPersonal);
+      final updatedProfile = await userRepository.getUser();
+      emit(ProfileUpdated(updatedProfile));
     });
     on<UpdateContactEvent>((event, emit) async {
-      profile = UserProfile(
-          image: profile.image,
-          personal: profile.personal,
-          contact: event.newContact,
-          delivery: profile.delivery);
-      emit(ProfileUpdated(profile));
+      await userRepository.updateContactInfo(event.newContact);
+      final updatedProfile = await userRepository.getUser();
+      emit(ProfileUpdated(updatedProfile));
     });
     on<UpdateDeliveryEvent>((event, emit) async {
-      profile = UserProfile(
-          image: profile.image,
-          personal: profile.personal,
-          contact: profile.contact,
-          delivery: event.newDelivery);
-      emit(ProfileUpdated(profile));
+      await userRepository.updateDeliveryInfo(event.newDelivery);
+      final updatedProfile = await userRepository.getUser();
+      emit(ProfileUpdated(updatedProfile));
     });
     on<ProfileEdit>((event, emit) async {
-      emit(ProfileLoaded(profile));
+      emit(ProfileLoading()); // แสดงสถานะการโหลด
+      try {
+        final profile = await userRepository.getUser();
+        emit(ProfileLoaded(profile)); // โหลดสำเร็จ, ส่งข้อมูล profile
+      } catch (error) {
+        emit(ProfileError(error.toString())); // มีข้อผิดพลาดเกิดขึ้น
+      }
     });
     on<ProfilePickImage>((event, emit) async {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -78,12 +83,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               ),
             ]);
         if (croppedImage != null) {
-          profile = UserProfile(
-              image: File(croppedImage.path),
-              personal: profile.personal,
-              contact: profile.contact,
-              delivery: profile.delivery);
-          emit(ProfileLoaded(profile));
+          // อัปโหลดรูปภาพไปยัง server หรือ storage
+          await userRepository.uploadImage(File(croppedImage.path));
+          // ดึง profile อัปเดตล่าสุดหลังจากการเปลี่ยนแปลง
+          final updatedProfile = await userRepository.getUser();
+          emit(ProfileLoaded(updatedProfile));
+          // profile = UserProfile(
+          //     image: File(croppedImage.path),
+          //     personal: profile.personal,
+          //     contact: profile.contact,
+          //     delivery: profile.delivery);
+          // emit(ProfileLoaded(profile));
         }
       }
     });
