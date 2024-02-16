@@ -3,7 +3,7 @@ import 'package:v_beauty/features/user_features/profile/ui/components/profile_lo
 
 class StoreBottomTab extends StatefulWidget {
   final token;
-  const StoreBottomTab({@required this.token, Key? key}) : super(key: key);
+  const StoreBottomTab({@required this.token, super.key});
 
   @override
   State<StoreBottomTab> createState() => _StoreBottomTabState();
@@ -18,7 +18,7 @@ class _StoreBottomTabState extends State<StoreBottomTab> {
             onTap: () {
               showLogoutConfirmationDialog(context);
             },
-            child: Text('Store')),
+            child: const Text('Store')),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 
 void showLogoutConfirmationDialog(BuildContext context) {

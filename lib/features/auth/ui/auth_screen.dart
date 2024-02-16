@@ -6,10 +6,9 @@ import 'package:v_beauty/features/auth/components/auth_button.dart';
 import 'package:v_beauty/features/auth/components/auth_textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/features/splash/splash_screen.dart';
-import 'package:v_beauty/widget/bottom_tab.dart';
 
 class AuthPage extends StatefulWidget {
-  AuthPage({super.key});
+  const AuthPage({super.key});
 
   @override
   State<AuthPage> createState() => _AuthPageState();

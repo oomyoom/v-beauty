@@ -10,7 +10,7 @@ import 'package:v_beauty/widget/section_title.dart';
 
 class HomePage extends StatefulWidget {
   final token;
-  const HomePage({@required this.token, Key? key}) : super(key: key);
+  const HomePage({@required this.token, super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

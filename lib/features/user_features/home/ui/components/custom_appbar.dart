@@ -47,7 +47,7 @@ class CustomAppBar extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.search),
+                        icon: const Icon(Icons.search),
                       ),
                     ],
                   ),
@@ -64,7 +64,7 @@ class CustomAppBar extends StatelessWidget {
 class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xFFE5C1C5);
+    Paint paint = Paint()..color = const Color(0xFFE5C1C5);
     Path path = Path()
       ..lineTo(0, size.height * 0.8)
       ..quadraticBezierTo(

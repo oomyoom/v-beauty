@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/features/user_features/home/ui/home_screen.dart';
+import 'package:v_beauty/features/user_features/profile/view/pages/profile_page.dart';
 import 'package:v_beauty/features/user_features/shop/ui/shop_screen.dart';
 
 class BottomTab extends StatefulWidget {
   final token;
-  const BottomTab({@required this.token, Key? key}) : super(key: key);
+  const BottomTab({@required this.token, super.key});
 
   @override
   State<BottomTab> createState() => _BottomTabState();
@@ -33,7 +34,7 @@ class _BottomTabState extends State<BottomTab> {
         children: <Widget>[
           HomePage(token: widget.token),
           ShoppingPage(token: widget.token),
-          HomePage(token: widget.token),
+          const ProfilePage(),
           // TestApi(token: widget.token),
           // ProfilePage(token: widget.token),
         ],

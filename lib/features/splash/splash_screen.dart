@@ -7,7 +7,7 @@ import 'package:v_beauty/widget/bottom_tab.dart';
 
 class SplashScreen extends StatefulWidget {
   String? token;
-  SplashScreen({@required this.token, Key? key}) : super(key: key);
+  SplashScreen({@required this.token, super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AuthPage(),
+            builder: (context) => const AuthPage(),
           ),
         );
       }

@@ -8,7 +8,7 @@ import 'package:v_beauty/repositories/product_api_repo.dart';
 class ShoppingPage extends StatefulWidget {
   final token;
 
-  const ShoppingPage({@required this.token, Key? key}) : super(key: key);
+  const ShoppingPage({@required this.token, super.key});
 
   @override
   State<ShoppingPage> createState() => _ShoppingPageState();
@@ -49,7 +49,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
                 child: Column(
                   children: [
                     Container(
-                      constraints: BoxConstraints.expand(height: 50),
+                      constraints: const BoxConstraints.expand(height: 50),
                       child: const TabBar(
                         isScrollable: true, // Allow tabs to scroll horizontally
                         labelPadding: EdgeInsets.symmetric(horizontal: 16.0),

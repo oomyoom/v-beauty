@@ -4,13 +4,13 @@ import 'package:v_beauty/models/product_data.dart'; // Import your product model
 class ProductCard extends StatelessWidget {
   final ProductModal product; // Assuming you have a Product model
 
-  const ProductCard({required this.product, Key? key}) : super(key: key);
+  const ProductCard({required this.product, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,21 +21,21 @@ class ProductCard extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "${product.productName}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'Price: \$${product.price}', // Replace with your product price
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
                   ),
