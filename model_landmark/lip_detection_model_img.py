@@ -1,6 +1,7 @@
 import base64
 import io
 
+from flask_cors import CORS
 import numpy as np
 import cv2 as cv
 from face_mesh_detector import FaceMeshDetector
@@ -69,3 +70,4 @@ def process_image_api():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port = 5000,debug=False)
+    CORS(app)

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/home/view/home_page.dart';
+import 'package:v_beauty/product_detail/test.dart';
 import 'package:v_beauty/profile/view/profile_page.dart';
 
 class BottomTab extends StatefulWidget {
@@ -12,7 +13,7 @@ class _BottomTabState extends State<BottomTab> {
 
   final List<Widget> _tabs = [
     HomePage(),
-    HomePage(),
+    FilterPage(),
     ProfilePage(),
   ];
 
