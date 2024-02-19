@@ -87,26 +87,57 @@ class ProfilePage extends StatelessWidget {
                       child: const DeliveryInfo(),
                     ),
                   )),
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: MediaQuery.of(context).size.width * 0.12),
-                    sliver: SliverToBoxAdapter(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showLogoutConfirmationDialog(context);
-                        },
-                        style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all<Size>(
-                              Size(MediaQuery.of(context).size.width,
-                                  MediaQuery.of(context).size.height * 0.05),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xFFE5C1C5))),
-                        child: Text('Logout'.toUpperCase(),
-                            style: Theme.of(context).textTheme.bodyMedium!),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.width * 0.02),
+                      child: Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showLogoutConfirmationDialog(context);
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(right: 7),
+                                  child: Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   )
+                  // SliverPadding(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: MediaQuery.of(context).size.width * 0.12),
+                  //   sliver: SliverToBoxAdapter(
+                  //     child: ElevatedButton(
+                  //       onPressed: () {
+                  //         showLogoutConfirmationDialog(context);
+                  //       },
+                  //       style: ButtonStyle(
+                  //           fixedSize: MaterialStateProperty.all<Size>(
+                  //             Size(MediaQuery.of(context).size.width,
+                  //                 MediaQuery.of(context).size.height * 0.05),
+                  //           ),
+                  //           backgroundColor: MaterialStateProperty.all(
+                  //               const Color(0xFFE5C1C5))),
+                  //       child: Text('Logout'.toUpperCase(),
+                  //           style: Theme.of(context).textTheme.bodyMedium!),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               );
             } else {

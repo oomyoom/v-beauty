@@ -53,7 +53,7 @@ class UserProfile {
         address: json['Address'],
         zipcode: json['Zipcode'].toString(),
       ),
-      image: (json['Image']['data'] as List).cast<int>(),
+      image: json['Image'] != null ? (json['Image']['data'] as List).cast<int>() : null,
     );
   }
 }

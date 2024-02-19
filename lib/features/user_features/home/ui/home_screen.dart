@@ -49,19 +49,6 @@ class _HomePageState extends State<HomePage> {
             if (state is HomeproductLoadedState) {
               return CustomScrollView(
                 slivers: [
-                  SliverToBoxAdapter(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: const Text('Logout'),
-                          onTap: () {
-                            print('LogOut');
-                            showLogoutConfirmationDialog(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
                   SliverPadding(
                     padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.04,

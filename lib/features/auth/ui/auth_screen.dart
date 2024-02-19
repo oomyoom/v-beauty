@@ -5,6 +5,7 @@ import 'package:v_beauty/constant/apiurl.dart';
 import 'package:v_beauty/features/auth/components/auth_button.dart';
 import 'package:v_beauty/features/auth/components/auth_textfield.dart';
 import 'package:http/http.dart' as http;
+import 'package:v_beauty/features/register/ui/register_screen.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 
 class AuthPage extends StatefulWidget {
@@ -130,6 +131,12 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ),
+                        );
                         print('Register');
                       },
                       child: const Text(
