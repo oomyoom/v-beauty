@@ -6,7 +6,6 @@ import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduc
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
-import 'package:v_beauty/widget/bottom_tab.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
