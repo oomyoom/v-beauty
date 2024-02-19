@@ -9,7 +9,7 @@ class UserRepository {
   Future<UserProfile> getUser() async {
     final token = await getToken();
     print(token);
-    final url = Uri.parse('http://192.168.1.101:3000/user/get');
+    final url = Uri.parse('http://${ApiConstants.getUser}/get');
     final response = await http.get(
       url,
       headers: {

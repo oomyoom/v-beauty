@@ -36,7 +36,7 @@ class EditProfilePage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is ProfileLoading) {
-            const Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
