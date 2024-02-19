@@ -24,13 +24,13 @@ void main() async {
         providers: [
           BlocProvider(
             create: (context) => HomeproductBloc(productRepository),
-            child: BottomTab(token: prefs.get('token')),
+            // child: BottomTab(token: prefs.get('token')),
           ),
           // BlocProvider(
           //   create: (create) => CategoryBloc(productRepository),
           // ),
           BlocProvider<ProfileBloc>(
-          create: (context) => ProfileBloc(userRepository: userRepository)
+          create: (_) => ProfileBloc(userRepository: userRepository)
             ..add(ProfileLoad()), // Dispatch the ProfileLoad event
         ),
         ],

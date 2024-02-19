@@ -20,9 +20,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoading()); // แสดงสถานะการโหลด
       try {
         final profile = await userRepository.getUser();
+        print(profile);
         emit(ProfileLoaded(profile)); // โหลดสำเร็จ, ส่งข้อมูล profile
       } catch (error) {
-        emit(ProfileError(error.toString())); // มีข้อผิดพลาดเกิดขึ้น
+        emit(ProfileError(error.toString()));
+        print(error.toString()); // มีข้อผิดพลาดเกิดขึ้น
       }
     });
     on<UpdatePersonalEvent>((event, emit) async {

@@ -36,24 +36,24 @@ class UserProfile {
       required this.image});
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
-    DateTime dateTime = DateTime.parse(json['birthday']).toUtc().toLocal();
+    DateTime dateTime = DateTime.parse(json['Birthday']).toUtc().toLocal();
     return UserProfile(
       personal: Personal(
-        firstName: json['fname'],
-        lastName: json['lname'],
-        gender: json['gender'],
+        firstName: json['FirstName'],
+        lastName: json['LastName'],
+        gender: json['Gender'],
         birthday: DateFormat('yyyy-MM-dd').format(dateTime),
       ),
       contact: Contact(
-        email: json['email'],
-        tel: json['tel'],
+        email: json['Email'],
+        tel: json['Tel'],
       ),
       delivery: Delivery(
-        provider: json['provider'],
-        address: json['address'],
-        zipcode: json['zipcode'].toString(),
+        provider: json['Provider'],
+        address: json['Address'],
+        zipcode: json['Zipcode'].toString(),
       ),
-      image: (json['image']['data'] as List).cast<int>(),
+      image: (json['Image']['data'] as List).cast<int>(),
     );
   }
 }

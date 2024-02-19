@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:v_beauty/constant/apiurl.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
 import 'package:v_beauty/utils/getToken.dart';
 
 class UserRepository {
   Future<UserProfile> getUser() async {
     final token = await getToken();
-    final url = Uri.parse('http://192.168.1.106:3000/user/get');
+    print(token);
+    final url = Uri.parse('http://192.168.1.101:3000/user/get');
     final response = await http.get(
       url,
       headers: {
@@ -19,7 +21,7 @@ class UserRepository {
 
     if (response.statusCode == 200) {
       final List<dynamic> userDataList = json.decode(response.body);
-
+      print(userDataList);
       if (userDataList.isNotEmpty) {
         final Map<String, dynamic> userData = userDataList[0];
         return UserProfile.fromJson(userData);
@@ -34,7 +36,7 @@ class UserRepository {
   Future<void> updatePersonalInfo(Personal personal) async {
     final token = await getToken();
 
-    final url = Uri.parse('http://192.168.1.106:3000/user/update/personal');
+    final url = Uri.parse('http://${ApiConstants.getUser}/update/personal');
     final response = await http.patch(
       url,
       headers: {
@@ -59,7 +61,7 @@ class UserRepository {
   Future<void> updateContactInfo(Contact contact) async {
     final token = await getToken();
 
-    final url = Uri.parse('http://192.168.1.106:3000/user/update/contact');
+    final url = Uri.parse('http://${ApiConstants.getUser}/update/contact');
     final response = await http.patch(
       url,
       headers: {
@@ -79,7 +81,7 @@ class UserRepository {
   Future<void> updateDeliveryInfo(Delivery delivery) async {
     final token = await getToken();
 
-    final url = Uri.parse('http://192.168.1.106:3000/user/update/delivery');
+    final url = Uri.parse('http://${ApiConstants.getUser}/update/delivery');
     final response = await http.patch(
       url,
       headers: {
@@ -101,7 +103,7 @@ class UserRepository {
   }
 
   Future<void> uploadImage(File imageFile) async {
-    final url = Uri.parse('http://192.168.1.106:3000/user/update/image');
+    final url = Uri.parse('http://${ApiConstants.getUser}/update/image');
     final request = http.MultipartRequest('PATCH', url);
     request.files.add(http.MultipartFile(
       'image',
