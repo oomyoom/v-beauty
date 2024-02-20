@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/models/product_data.dart'; // Import your product model
+import 'package:v_beauty/features/user_features/home/models/product_data.dart'; // Import your product model
 
 class ProductCard extends StatelessWidget {
   final ProductModal product; // Assuming you have a Product model

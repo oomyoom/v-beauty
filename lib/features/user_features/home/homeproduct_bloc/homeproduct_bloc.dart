@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:v_beauty/models/product_data.dart';
+import 'package:v_beauty/features/user_features/home/models/product_data.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
 
 part 'homeproduct_event.dart';

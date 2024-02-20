@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/models/product_data.dart';
+import 'package:v_beauty/features/user_features/home/models/product_data.dart';
+import 'package:v_beauty/features/user_features/products/ui/product_screen.dart';
 
 class ProductContent extends StatelessWidget {
   const ProductContent({super.key, required this.product});
@@ -15,16 +16,18 @@ class ProductContent extends StatelessWidget {
                     horizontal: MediaQuery.of(context).size.width * 0.01),
                 child: InkWell(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ProductPage(
-                    //       pic: product[index].image,
-                    //       title: product[index].productName,
-                    //       price: product[index].price,
-                    //     ),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDetailsPage(
+                          pic: product[index].image,
+                          title: product[index].productName,
+                          price: product[index].price,
+                          shop: product[index].name,
+                          filterUrl: product[index].filterUrl,
+                        ),
+                      ),
+                    );
                   },
                   child: Column(
                     children: [

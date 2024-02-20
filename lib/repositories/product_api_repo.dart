@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/constant/apiurl.dart';
-import 'package:v_beauty/models/product_data.dart';
+import 'package:v_beauty/features/user_features/home/models/product_data.dart';
 
 
 
