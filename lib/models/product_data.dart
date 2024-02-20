@@ -10,7 +10,7 @@ String productModalToJson(List<ProductModal> data) => json.encode(List<dynamic>.
 
 class ProductModal {
     int? productId;
-    String? productName;
+    String? name;
     int? price;
     int? categoryId;
     int? r;
@@ -22,7 +22,7 @@ class ProductModal {
 
     ProductModal({
         this.productId,
-        this.productName,
+        this.name,
         this.price,
         this.categoryId,
         this.r,
@@ -35,7 +35,7 @@ class ProductModal {
 
     factory ProductModal.fromJson(Map<String, dynamic> json) => ProductModal(
         productId: json["ProductID"],
-        productName: json["ProductName"],
+        name: json["ProductName"],
         price: json["Price"],
         categoryId: json["CategoryID"],
         r: json["R"],
@@ -48,7 +48,7 @@ class ProductModal {
 
     Map<String, dynamic> toJson() => {
         "ProductID": productId,
-        "ProductName": productName,
+        "ProductName": name,
         "Price": price,
         "CategoryID": categoryId,
         "R": r,

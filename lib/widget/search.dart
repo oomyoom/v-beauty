@@ -40,36 +40,35 @@ class _SearchState extends State<Search> {
         backgroundColor: const Color(0xFFE5C1C5),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.04),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(
-                  MediaQuery.of(context).size.width * 0.06),
+        title: TextField(
+          onChanged: (value) {
+            _search(value);
+          },
+          decoration: InputDecoration(
+            hintText: widget.title,
+            suffixIcon: const Icon(Icons.search_rounded),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.white,
+                width: 2.0,
+              ),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(MediaQuery.of(context).size.width * 0.06)),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    onChanged: (value) {
-                      _search(value);
-                    },
-                    decoration: InputDecoration(
-                      hintText: widget.title,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: MediaQuery.of(context).size.width * 0.04),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.search),
-                ),
-              ],
+            filled: true,
+            fillColor: Colors.white,
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Colors.white,
+                width: 2.0,
+              ),
+              borderRadius: BorderRadius.all(
+                  Radius.circular(MediaQuery.of(context).size.width * 0.06)),
             ),
+            hintStyle: Theme.of(context).textTheme.bodyMedium!,
+            //border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.04),
           ),
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:v_beauty/features/user_features/profile/ui/components/profile_logout.dart';
+import 'package:v_beauty/features/user_features/profile/view/components/profile_page/profile_logout.dart';
 
 class StoreBottomTab extends StatefulWidget {
   final token;

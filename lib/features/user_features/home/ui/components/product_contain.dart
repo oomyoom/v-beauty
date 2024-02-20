@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 import 'package:v_beauty/models/product_data.dart';
 
 class ProductContent extends StatelessWidget {
@@ -15,6 +17,7 @@ class ProductContent extends StatelessWidget {
                     horizontal: MediaQuery.of(context).size.width * 0.01),
                 child: InkWell(
                   onTap: () {
+                    context.read<CartBloc>().add(CartItemAdded(product[index]));
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
@@ -46,7 +49,7 @@ class ProductContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${product[index].productName}',
+                              '${product[index].name}',
                               style: Theme.of(context).textTheme.bodyMedium!,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -76,7 +79,8 @@ class ProductContent extends StatelessWidget {
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!
-                                          .copyWith(color: const Color(0xFF615C62)),
+                                          .copyWith(
+                                              color: const Color(0xFF615C62)),
                                     ),
                                   ],
                                 ),

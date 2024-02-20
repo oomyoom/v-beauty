@@ -16,69 +16,80 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ImagePicker _picker = ImagePicker();
 
   ProfileBloc({required this.userRepository}) : super(ProfileInitial()) {
-    on<ProfileLoad>((event, emit) async {
-      emit(ProfileLoading()); // แสดงสถานะการโหลด
-      try {
-        final profile = await userRepository.getUser();
-        print(profile);
-        emit(ProfileLoaded(profile)); // โหลดสำเร็จ, ส่งข้อมูล profile
-      } catch (error) {
-        emit(ProfileError(error.toString()));
-        print(error.toString()); // มีข้อผิดพลาดเกิดขึ้น
+    on<ProfileLoad>(_onProfileLoad);
+    on<UpdatePersonalEvent>(_onUpdatePersonal);
+    on<UpdateContactEvent>(_onUpdateContact);
+    on<UpdateDeliveryEvent>(_onUpdateDelivery);
+    on<ProfileEdit>(_onProfileEdit);
+    on<ProfilePickImage>(_onProfilePickImage);
+  }
+
+  Future<void> _onProfileLoad(
+      ProfileLoad event, Emitter<ProfileState> emit) async {
+    await _loadAndUpdateProfile(emit);
+  }
+
+  Future<void> _onUpdatePersonal(
+      UpdatePersonalEvent event, Emitter<ProfileState> emit) async {
+    await userRepository.updatePersonalInfo(event.newPersonal);
+    emit(ProfileUpdated());
+  }
+
+  Future<void> _onUpdateContact(
+      UpdateContactEvent event, Emitter<ProfileState> emit) async {
+    await userRepository.updateContactInfo(event.newContact);
+    emit(ProfileUpdated());
+  }
+
+  Future<void> _onUpdateDelivery(
+      UpdateDeliveryEvent event, Emitter<ProfileState> emit) async {
+    await userRepository.updateDeliveryInfo(event.newDelivery);
+    emit(ProfileUpdated());
+  }
+
+  Future<void> _onProfileEdit(
+      ProfileEdit event, Emitter<ProfileState> emit) async {
+    await _loadAndUpdateProfile(emit);
+  }
+
+  Future<void> _onProfilePickImage(
+      ProfilePickImage event, Emitter<ProfileState> emit) async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      final CroppedFile? croppedImage = await _cropImage(image.path);
+      if (croppedImage != null) {
+        await userRepository.uploadImage(File(croppedImage.path));
+        await _loadAndUpdateProfile(emit);
       }
-    });
-    on<UpdatePersonalEvent>((event, emit) async {
-      await userRepository.updatePersonalInfo(event.newPersonal);
-      final updatedProfile = await userRepository.getUser();
-      emit(ProfileUpdated(updatedProfile));
-    });
-    on<UpdateContactEvent>((event, emit) async {
-      await userRepository.updateContactInfo(event.newContact);
-      final updatedProfile = await userRepository.getUser();
-      emit(ProfileUpdated(updatedProfile));
-    });
-    on<UpdateDeliveryEvent>((event, emit) async {
-      await userRepository.updateDeliveryInfo(event.newDelivery);
-      final updatedProfile = await userRepository.getUser();
-      emit(ProfileUpdated(updatedProfile));
-    });
-    on<ProfileEdit>((event, emit) async {
-      emit(ProfileLoading()); // แสดงสถานะการโหลด
-      try {
-        final profile = await userRepository.getUser();
-        emit(ProfileLoaded(profile)); // โหลดสำเร็จ, ส่งข้อมูล profile
-      } catch (error) {
-        emit(ProfileError(error.toString())); // มีข้อผิดพลาดเกิดขึ้น
-      }
-    });
-    on<ProfilePickImage>((event, emit) async {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        final CroppedFile? croppedImage = await ImageCropper().cropImage(
-            sourcePath: image.path,
-            cropStyle: CropStyle.circle, // Set crop style to circle
-            uiSettings: [
-              AndroidUiSettings(
-                toolbarTitle: 'Crop Image',
-                toolbarColor: const Color(0xFFE5C1C5),
-                toolbarWidgetColor: Colors.black,
-                initAspectRatio: CropAspectRatioPreset.square,
-                lockAspectRatio: true, // Lock the aspect ratio for circle
-              ),
-              IOSUiSettings(
-                minimumAspectRatio: 1.0,
-                aspectRatioLockEnabled:
-                    true, // Lock the aspect ratio for circle
-              ),
-            ]);
-        if (croppedImage != null) {
-          // อัปโหลดรูปภาพไปยัง server หรือ storage
-          await userRepository.uploadImage(File(croppedImage.path));
-          // ดึง profile อัปเดตล่าสุดหลังจากการเปลี่ยนแปลง
-          final updatedProfile = await userRepository.getUser();
-          emit(ProfileLoaded(updatedProfile));
-        }
-      }
-    });
+    }
+  }
+
+  Future<CroppedFile?> _cropImage(String imagePath) async {
+    return await ImageCropper().cropImage(
+        sourcePath: imagePath,
+        cropStyle: CropStyle.circle,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Crop Image',
+            toolbarColor: const Color(0xFFE5C1C5),
+            toolbarWidgetColor: Colors.black,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
+          ),
+          IOSUiSettings(
+            minimumAspectRatio: 1.0,
+            aspectRatioLockEnabled: true,
+          ),
+        ]);
+  }
+
+  Future<void> _loadAndUpdateProfile(Emitter<ProfileState> emit) async {
+    emit(ProfileLoading());
+    try {
+      final profile = await userRepository.getUser();
+      emit(ProfileLoaded(profile));
+    } catch (error) {
+      emit(ProfileError(error.toString()));
+    }
   }
 }

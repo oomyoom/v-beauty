@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
-import 'package:v_beauty/features/user_features/profile/view/components/profile_edit/contact_edit.dart';
-import 'package:v_beauty/features/user_features/profile/view/components/profile_edit/delivery_edit.dart';
-import 'package:v_beauty/features/user_features/profile/view/components/profile_edit/personal_edit.dart';
+import 'package:v_beauty/features/user_features/profile/view/components/profile.dart';
 
 class EditProfilePage extends StatelessWidget {
   EditProfilePage({super.key, required this.editSection});
@@ -30,8 +28,8 @@ class EditProfilePage extends StatelessWidget {
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileUpdated) {
-            context.read<ProfileBloc>().add(ProfileLoad());
             Navigator.pop(context);
+            context.read<ProfileBloc>().add(ProfileLoad());
           }
         },
         builder: (context, state) {

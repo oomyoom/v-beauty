@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/store_features/widgets/store_bottom_tab.dart';
+import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/widget/bottom_tab.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (widget.token != null) {
         var decodedToken = JwtDecoder.decode(widget.token!);
         if (decodedToken['role_id'] == 1) {
+          context.read<ProfileBloc>().add(ProfileLoad());
           Navigator.push(
             context,
             MaterialPageRoute(

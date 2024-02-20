@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
-import 'package:v_beauty/features/user_features/home/ui/components/custom_appbar.dart';
+import 'package:v_beauty/widget/custom_appbar.dart';
 import 'package:v_beauty/features/user_features/shop/ui/components/product_card.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
 

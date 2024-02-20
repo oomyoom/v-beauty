@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
@@ -18,6 +19,7 @@ void main() async {
       providers: [
         RepositoryProvider<AllProductRepository>(
             create: (_) => productRepository),
+        RepositoryProvider<UserRepository>(create: (_) => userRepository)
       ],
       child: MultiBlocProvider(
         providers: [
@@ -28,10 +30,12 @@ void main() async {
           // BlocProvider(
           //   create: (create) => CategoryBloc(productRepository),
           // ),
+          BlocProvider<CartBloc>(create: (_) => CartBloc()),
           BlocProvider<ProfileBloc>(
-          create: (_) => ProfileBloc(userRepository: userRepository)
-            ..add(ProfileLoad()), // Dispatch the ProfileLoad event
-        ),
+            create: (_) => ProfileBloc(
+                userRepository:
+                    userRepository), // Dispatch the ProfileLoad event
+          ),
         ],
         child: MyAppView(token: prefs.getString('token')),
       ),

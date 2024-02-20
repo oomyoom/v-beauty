@@ -8,7 +8,7 @@ import 'package:v_beauty/utils/getToken.dart';
 class UserRepository {
   Future<UserProfile> getUser() async {
     final token = await getToken();
-    print(token);
+
     final url = Uri.parse('http://${ApiConstants.getUser}/get');
     final response = await http.get(
       url,
@@ -21,7 +21,6 @@ class UserRepository {
 
     if (response.statusCode == 200) {
       final List<dynamic> userDataList = json.decode(response.body);
-      print(userDataList);
       if (userDataList.isNotEmpty) {
         final Map<String, dynamic> userData = userDataList[0];
         return UserProfile.fromJson(userData);
