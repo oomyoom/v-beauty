@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,6 +8,7 @@ import 'package:v_beauty/features/auth/components/auth_button.dart';
 import 'package:v_beauty/features/auth/components/auth_textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/features/splash/splash_screen.dart';
+import 'package:v_beauty/utils/tokenManagement.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -42,13 +45,11 @@ class _AuthPageState extends State<AuthPage> {
       var jsonResponse = jsonDecode(response.body);
       if (jsonResponse['status'] == "success") {
         var myToken = jsonResponse['token'];
-        prefs.setString('token', myToken);
+        saveToken(myToken);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SplashScreen(
-              token: myToken,
-            ),
+            builder: (context) => const SplashScreen(),
           ),
         );
       } else {

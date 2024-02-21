@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:v_beauty/features/user_features/profile/view/components/profile_page/profile_logout.dart';
 
 class StoreBottomTab extends StatefulWidget {
-  final token;
-  const StoreBottomTab({@required this.token, super.key});
+  const StoreBottomTab({super.key});
 
   @override
   State<StoreBottomTab> createState() => _StoreBottomTabState();

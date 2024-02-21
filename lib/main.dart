@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
@@ -10,7 +9,6 @@ import 'package:v_beauty/repositories/product_api_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   final userRepository = UserRepository();
   final productRepository =
       AllProductRepository(); // Initialize your repository here
@@ -37,15 +35,14 @@ void main() async {
                     userRepository), // Dispatch the ProfileLoad event
           ),
         ],
-        child: MyAppView(token: prefs.getString('token')),
+        child: MyAppView(),
       ),
     ),
   );
 }
 
 class MyAppView extends StatelessWidget {
-  var token;
-  MyAppView({@required this.token, super.key});
+  const MyAppView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +60,7 @@ class MyAppView extends StatelessWidget {
               error: Colors.red,
               outline: Color(0xFF424242)),
         ),
-        home: SplashScreen(
-          token: token,
-        )
+        home: const SplashScreen()
         // home: SplashScreen(
         //   token: token,
         // ),

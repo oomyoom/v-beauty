@@ -1,6 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
+import 'package:v_beauty/utils/tokenManagement.dart';
 
 void showLogoutConfirmationDialog(BuildContext context) {
   showDialog(
@@ -12,8 +14,11 @@ void showLogoutConfirmationDialog(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
-              deleteTokenAndLogout(context);
+              removeToken();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SplashScreen()));
             },
             child: const Text('Yes'),
           ),
@@ -27,16 +32,4 @@ void showLogoutConfirmationDialog(BuildContext context) {
       );
     },
   );
-}
-
-void deleteTokenAndLogout(BuildContext context) async {
-  try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => SplashScreen()));
-  } catch (e) {
-    // จัดการข้อผิดพลาดตามที่คุณต้องการ
-    print('Error during logout: $e');
-  }
 }

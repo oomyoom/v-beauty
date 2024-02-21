@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,11 +7,11 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/store_features/widgets/store_bottom_tab.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
+import 'package:v_beauty/utils/tokenManagement.dart';
 import 'package:v_beauty/widget/bottom_tab.dart';
 
 class SplashScreen extends StatefulWidget {
-  String? token;
-  SplashScreen({@required this.token, super.key});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -19,38 +21,40 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     Timer(const Duration(seconds: 2), () {
-      if (widget.token != null) {
-        var decodedToken = JwtDecoder.decode(widget.token!);
-        if (decodedToken['role_id'] == 1) {
-          context.read<ProfileBloc>().add(ProfileLoad());
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BottomTab(
-                token: widget.token,
-              ),
-            ),
-          );
-        } else if (decodedToken['role_id'] == 3) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => StoreBottomTab(
-                token: widget.token,
-              ),
-            ),
-          );
-        }
-      } else {
-        Navigator.push(
+      checkToken();
+    });
+  }
+
+  void checkToken() async {
+    final String? token = await getToken();
+    if (token != null && !isTokenExpired(token)) {
+      var decodedToken = JwtDecoder.decode(token);
+      if (decodedToken['role_id'] == 1) {
+        context.read<ProfileBloc>().add(ProfileLoad());
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const AuthPage(),
+            builder: (context) => const BottomTab(),
+          ),
+        );
+      } else if (decodedToken['role_id'] == 3) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const StoreBottomTab(),
           ),
         );
       }
-    });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AuthPage(),
+        ),
+      );
+    }
   }
 
   @override

@@ -4,8 +4,7 @@ import 'package:v_beauty/features/user_features/profile/view/pages/profile_page.
 import 'package:v_beauty/features/user_features/shop/ui/shop_screen.dart';
 
 class BottomTab extends StatefulWidget {
-  final token;
-  const BottomTab({@required this.token, super.key});
+  const BottomTab({super.key});
 
   @override
   State<BottomTab> createState() => _BottomTabState();
@@ -31,10 +30,10 @@ class _BottomTabState extends State<BottomTab> {
             currentPage = value;
           });
         }),
-        children: <Widget>[
-          HomePage(token: widget.token),
-          ShoppingPage(token: widget.token),
-          const ProfilePage(),
+        children: const <Widget>[
+          HomePage(),
+          ShoppingPage(),
+          ProfilePage(),
           // TestApi(token: widget.token),
           // ProfilePage(token: widget.token),
         ],

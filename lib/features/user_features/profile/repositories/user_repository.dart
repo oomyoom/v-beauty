@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/constant/apiurl.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
-import 'package:v_beauty/utils/getToken.dart';
+import 'package:v_beauty/utils/tokenManagement.dart';
 
 class UserRepository {
   Future<UserProfile> getUser() async {

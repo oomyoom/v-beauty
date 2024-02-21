@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/widget/custom_appbar.dart';
 import 'package:v_beauty/features/user_features/home/ui/components/product_contain.dart';
@@ -8,23 +7,8 @@ import 'package:v_beauty/features/user_features/profile/view/components/profile_
 import 'package:v_beauty/repositories/product_api_repo.dart';
 import 'package:v_beauty/widget/section_title.dart';
 
-class HomePage extends StatefulWidget {
-  final token;
-  const HomePage({@required this.token, super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  late String email;
-
-  @override
-  void initState() {
-    super.initState();
-    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
-    email = jwtDecodedToken['email'];
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +39,6 @@ class _HomePageState extends State<HomePage> {
                         GestureDetector(
                           child: const Text('Logout'),
                           onTap: () {
-                            print('LogOut');
                             showLogoutConfirmationDialog(context);
                           },
                         ),
