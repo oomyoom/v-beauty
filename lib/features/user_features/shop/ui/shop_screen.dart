@@ -4,19 +4,12 @@ import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduc
 import 'package:v_beauty/widget/custom_appbar.dart';
 import 'package:v_beauty/features/user_features/shop/ui/components/product_card.dart';
 
-class ShoppingPage extends StatefulWidget {
+class ShoppingPage extends StatelessWidget {
   const ShoppingPage({super.key});
-
-  @override
-  State<ShoppingPage> createState() => _ShoppingPageState();
-}
-
-class _ShoppingPageState extends State<ShoppingPage> {
 
   @override
   Widget build(BuildContext context) {
     final appBarHeight = MediaQuery.of(context).size.height * 0.25;
-    context.read<HomeproductBloc>().add(LoadHomeproduct());
 
     return Scaffold(
       appBar: PreferredSize(
@@ -78,29 +71,25 @@ class _ShoppingPageState extends State<ShoppingPage> {
                         ListView.builder(
                           itemCount: state.lipMakeup.length,
                           itemBuilder: (context, index) {
-                            return ProductCard(
-                                product: state.lipMakeup[index]);
+                            return ProductCard(product: state.lipMakeup[index]);
                           },
                         ),
                         ListView.builder(
                           itemCount: state.eyeMakeup.length,
                           itemBuilder: (context, index) {
-                            return ProductCard(
-                                product: state.eyeMakeup[index]);
+                            return ProductCard(product: state.eyeMakeup[index]);
                           },
                         ),
                         ListView.builder(
                           itemCount: state.skinCare.length,
                           itemBuilder: (context, index) {
-                            return ProductCard(
-                                product: state.skinCare[index]);
+                            return ProductCard(product: state.skinCare[index]);
                           },
                         ),
                         ListView.builder(
                           itemCount: state.menMakeup.length,
                           itemBuilder: (context, index) {
-                            return ProductCard(
-                                product: state.menMakeup[index]);
+                            return ProductCard(product: state.menMakeup[index]);
                           },
                         ),
                       ],

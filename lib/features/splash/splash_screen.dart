@@ -7,7 +7,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/store_features/widgets/store_bottom_tab.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
-import 'package:v_beauty/utils/tokenManagement.dart';
+import 'package:v_beauty/utils/token_management.dart';
 import 'package:v_beauty/widget/bottom_tab.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,16 +23,21 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Timer(const Duration(seconds: 2), () {
-      checkToken();
+      _checkTokenExpiration();
     });
   }
 
-  void checkToken() async {
+  void _checkTokenExpiration() async {
     final String? token = await getToken();
-    if (token != null && !isTokenExpired(token)) {
+    // เพิ่มการตรวจสอบ mounted ที่นี่เพื่อหลีกเลี่ยงการใช้ context หลังจาก widget ถูก unmount
+    if (!mounted) return;
+
+    if (token != null && !JwtDecoder.isExpired(token)) {
       var decodedToken = JwtDecoder.decode(token);
       if (decodedToken['role_id'] == 1) {
         context.read<ProfileBloc>().add(ProfileLoad());
+        // ตรวจสอบ mounted อีกครั้งก่อนทำการนำทาง
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -40,6 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         );
       } else if (decodedToken['role_id'] == 3) {
+        // ตรวจสอบ mounted อีกครั้งก่อนทำการนำทาง
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -48,6 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       }
     } else {
+      // ตรวจสอบ mounted อีกครั้งก่อนทำการนำทาง
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

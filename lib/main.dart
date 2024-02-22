@@ -6,36 +6,41 @@ import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduc
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
+import 'package:v_beauty/utils/appstate_observer.dart';
+import 'package:v_beauty/utils/session_expired.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final userRepository = UserRepository();
   final productRepository =
       AllProductRepository(); // Initialize your repository here
   runApp(
-    MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AllProductRepository>(
-            create: (_) => productRepository),
-        RepositoryProvider<UserRepository>(create: (_) => userRepository)
-      ],
-      child: MultiBlocProvider(
+    AppLifecycleReactor(
+      child: MultiRepositoryProvider(
         providers: [
-          BlocProvider(
-            create: (context) => HomeproductBloc(productRepository),
-            // child: BottomTab(token: prefs.get('token')),
-          ),
-          // BlocProvider(
-          //   create: (create) => CategoryBloc(productRepository),
-          // ),
-          BlocProvider<CartBloc>(create: (_) => CartBloc()),
-          BlocProvider<ProfileBloc>(
-            create: (_) => ProfileBloc(
-                userRepository:
-                    userRepository), // Dispatch the ProfileLoad event
-          ),
+          RepositoryProvider<AllProductRepository>(
+              create: (_) => productRepository),
+          RepositoryProvider<UserRepository>(create: (_) => userRepository)
         ],
-        child: MyAppView(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  HomeproductBloc(productRepository)..add(LoadHomeproduct()),
+              // child: BottomTab(token: prefs.get('token')),
+            ),
+            // BlocProvider(
+            //   create: (create) => CategoryBloc(productRepository),
+            // ),
+            BlocProvider<CartBloc>(create: (_) => CartBloc()),
+            BlocProvider<ProfileBloc>(
+              create: (_) => ProfileBloc(
+                  userRepository:
+                      userRepository), // Dispatch the ProfileLoad event
+            ),
+          ],
+          child: const MyAppView(),
+        ),
       ),
     ),
   );
@@ -47,6 +52,7 @@ class MyAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorKey: navigatorKey, // ใช้ GlobalKey ที่นี่
         title: 'Firebase Auth',
         theme: ThemeData(
           colorScheme: const ColorScheme.light(

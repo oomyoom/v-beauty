@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
-import 'package:v_beauty/utils/tokenManagement.dart';
+import 'package:v_beauty/utils/token_management.dart';
 
 void showLogoutConfirmationDialog(BuildContext context) {
   showDialog(

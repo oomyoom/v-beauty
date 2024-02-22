@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/view/components/profile.dart';
+import 'package:v_beauty/utils/session_expired.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -34,7 +35,12 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.grey[200],
-        body: BlocBuilder<ProfileBloc, ProfileState>(
+        body: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) {
+            if (state is Unauthenticated) {
+              showSessionExpiredSnackbarAndNavigate(context);
+            }
+          },
           builder: (context, state) {
             if (state is ProfileLoading) {
               return const Center(child: CircularProgressIndicator());

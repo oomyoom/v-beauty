@@ -5,8 +5,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
 import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
+import 'package:v_beauty/utils/token_management.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -17,9 +19,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   ProfileBloc({required this.userRepository}) : super(ProfileInitial()) {
     on<ProfileLoad>(_onProfileLoad);
-    on<UpdatePersonalEvent>(_onUpdatePersonal);
-    on<UpdateContactEvent>(_onUpdateContact);
-    on<UpdateDeliveryEvent>(_onUpdateDelivery);
+    on<UpdatePersonalEvent>(_onEventWithTokenCheck);
+    on<UpdateContactEvent>(_onEventWithTokenCheck);
+    on<UpdateDeliveryEvent>(_onEventWithTokenCheck);
     on<ProfileEdit>(_onProfileEdit);
     on<ProfilePickImage>(_onProfilePickImage);
   }
@@ -29,22 +31,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     await _loadAndUpdateProfile(emit);
   }
 
-  Future<void> _onUpdatePersonal(
-      UpdatePersonalEvent event, Emitter<ProfileState> emit) async {
-    await userRepository.updatePersonalInfo(event.newPersonal);
-    emit(ProfileUpdated());
-  }
+  Future<void> _onEventWithTokenCheck(
+      ProfileEvent event, Emitter<ProfileState> emit) async {
+    if (await _checkAndHandleTokenExpiration(emit)) return;
 
-  Future<void> _onUpdateContact(
-      UpdateContactEvent event, Emitter<ProfileState> emit) async {
-    await userRepository.updateContactInfo(event.newContact);
-    emit(ProfileUpdated());
-  }
-
-  Future<void> _onUpdateDelivery(
-      UpdateDeliveryEvent event, Emitter<ProfileState> emit) async {
-    await userRepository.updateDeliveryInfo(event.newDelivery);
-    emit(ProfileUpdated());
+    try {
+      if (event is UpdatePersonalEvent) {
+        await userRepository.updatePersonalInfo(event.newPersonal);
+      } else if (event is UpdateContactEvent) {
+        await userRepository.updateContactInfo(event.newContact);
+      } else if (event is UpdateDeliveryEvent) {
+        await userRepository.updateDeliveryInfo(event.newDelivery);
+      }
+      emit(ProfileUpdated());
+    } catch (error) {
+      emit(ProfileError(error.toString()));
+    }
   }
 
   Future<void> _onProfileEdit(
@@ -54,12 +56,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Future<void> _onProfilePickImage(
       ProfilePickImage event, Emitter<ProfileState> emit) async {
+    if (await _checkAndHandleTokenExpiration(emit)) return;
+
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       final CroppedFile? croppedImage = await _cropImage(image.path);
       if (croppedImage != null) {
-        await userRepository.uploadImage(File(croppedImage.path));
-        await _loadAndUpdateProfile(emit);
+        try {
+          await userRepository.uploadImage(File(croppedImage.path));
+          emit(ProfileUpdated());
+        } catch (error) {
+          emit(ProfileError(error.toString()));
+        }
       }
     }
   }
@@ -83,13 +91,34 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ]);
   }
 
+  Future<bool> checkTokenExpiration() async {
+    final String? token = await getToken();
+    if (token == null || JwtDecoder.isExpired(token)) {
+      await removeToken();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<void> _loadAndUpdateProfile(Emitter<ProfileState> emit) async {
     emit(ProfileLoading());
+    if (await _checkAndHandleTokenExpiration(emit)) return;
+
     try {
       final profile = await userRepository.getUser();
       emit(ProfileLoaded(profile));
     } catch (error) {
       emit(ProfileError(error.toString()));
     }
+  }
+
+  Future<bool> _checkAndHandleTokenExpiration(
+      Emitter<ProfileState> emit) async {
+    if (await checkTokenExpiration()) {
+      emit(Unauthenticated());
+      return true;
+    }
+    return false;
   }
 }

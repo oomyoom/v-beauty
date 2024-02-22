@@ -2,13 +2,12 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:v_beauty/constant/apiurl.dart';
 import 'package:v_beauty/features/auth/components/auth_button.dart';
 import 'package:v_beauty/features/auth/components/auth_textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/features/splash/splash_screen.dart';
-import 'package:v_beauty/utils/tokenManagement.dart';
+import 'package:v_beauty/utils/token_management.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -20,14 +19,6 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  late SharedPreferences prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    initSharedPref();
-  }
 
   Future<void> signUserIn() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
@@ -46,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
       if (jsonResponse['status'] == "success") {
         var myToken = jsonResponse['token'];
         saveToken(myToken);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => const SplashScreen(),
@@ -58,14 +49,15 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  void initSharedPref() async {
-    prefs = await SharedPreferences.getInstance();
-  }
+  // void initSharedPref() async {
+  //   prefs = await SharedPreferences.getInstance();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        reverse: true,
         child: SafeArea(
           child: Center(
             child: Column(

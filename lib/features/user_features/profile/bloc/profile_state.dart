@@ -28,3 +28,5 @@ class ProfileError extends ProfileState {
 }
 
 class ProfileUpdated extends ProfileState {}
+
+class Unauthenticated extends ProfileState {}
