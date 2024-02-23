@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/utils/session_expired.dart';
 import 'package:v_beauty/utils/token_management.dart';
 
@@ -33,17 +33,17 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactor>
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       // แอปกลับมา active, ตรวจสอบ token
-      checkTokenExpiration();
+      _checkTokenExpiration();
     }
   }
 
-  void checkTokenExpiration() async {
-    final String? token = await getToken();
-    if (token == null || JwtDecoder.isExpired(token)) {
-      await removeToken(); // ตรวจสอบวิธีการลบ token ของคุณ
-      showSessionExpiredSnackbarAndNavigate(context);
+  void _checkTokenExpiration() async {
+    if (await checkTokenExpiration()) {
+      navigatorKey.currentState?.pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const SplashScreen()),
+        (Route<dynamic> route) => false, // ไม่เก็บหน้าใดๆ เอาไว้
+      );
     }
-    // ถ้ามี token และไม่หมดอายุ, ไม่ทำอะไร
   }
 
   @override

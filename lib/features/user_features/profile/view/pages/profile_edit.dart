@@ -5,8 +5,8 @@ import 'package:v_beauty/features/user_features/profile/models/user.dart';
 import 'package:v_beauty/features/user_features/profile/view/components/profile.dart';
 import 'package:v_beauty/utils/session_expired.dart';
 
-class EditProfilePage extends StatelessWidget {
-  EditProfilePage({super.key, required this.editSection});
+class ProfileEditPage extends StatelessWidget {
+  ProfileEditPage({super.key, required this.editSection});
 
   final String editSection;
   final _formKey = GlobalKey<FormState>();
@@ -31,7 +31,7 @@ class EditProfilePage extends StatelessWidget {
           if (state is Unauthenticated) {
             showSessionExpiredSnackbarAndNavigate(context);
           } else if (state is ProfileUpdated) {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
             context.read<ProfileBloc>().add(ProfileLoad());
           }
         },

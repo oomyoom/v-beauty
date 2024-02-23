@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
 import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
 import 'package:v_beauty/utils/token_management.dart';
@@ -89,16 +88,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             aspectRatioLockEnabled: true,
           ),
         ]);
-  }
-
-  Future<bool> checkTokenExpiration() async {
-    final String? token = await getToken();
-    if (token == null || JwtDecoder.isExpired(token)) {
-      await removeToken();
-      return true;
-    } else {
-      return false;
-    }
   }
 
   Future<void> _loadAndUpdateProfile(Emitter<ProfileState> emit) async {

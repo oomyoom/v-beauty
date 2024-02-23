@@ -1,10 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 import 'package:v_beauty/features/user_features/profile/models/address.dart';
 import 'package:v_beauty/features/user_features/profile/repositories/address_repository.dart';
 import 'package:v_beauty/widget/custom_textformfield.dart';
 import 'package:v_beauty/widget/search.dart';
-
 
 class DeliveryEdit extends StatelessWidget {
   const DeliveryEdit({
@@ -20,8 +21,7 @@ class DeliveryEdit extends StatelessWidget {
 
   Future<void> _setAddress(BuildContext context) async {
     final AddressRepository repository = AddressRepository();
-    final result = await Navigator.push(
-      context,
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => Search(
               searchFunction: (String searchName) async {
@@ -37,8 +37,8 @@ class DeliveryEdit extends StatelessWidget {
                 final address =
                     '${result.name}/${disList[0].name}/${proList[0].name}';
                 final zipcode = zipList[0].name;
-                Navigator.pop(
-                    context, Address(address: address, zipcode: zipcode));
+                Navigator.of(context)
+                    .pop(Address(address: address, zipcode: zipcode));
               },
               title: 'ตำบล')),
     );

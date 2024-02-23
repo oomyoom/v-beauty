@@ -8,7 +8,7 @@ void showSessionExpiredSnackbarAndNavigate(BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
-        'Session expired, please login again.',
+        'Session หมดอายุแล้ว กรุณาเข้าสู่ระบบอีกครั้ง',
         style: Theme.of(context)
             .textTheme
             .bodyLarge!
@@ -19,8 +19,7 @@ void showSessionExpiredSnackbarAndNavigate(BuildContext context) {
   );
   // รอและนำทางไปยัง SplashScreen
   Future.delayed(const Duration(seconds: 2), () {
-    Navigator.pushAndRemoveUntil(
-      context,
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) => const SplashScreen()),
       (Route<dynamic> route) => false, // ไม่เก็บหน้าใดๆ เอาไว้
     );

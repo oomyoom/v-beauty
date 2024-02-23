@@ -28,12 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _checkTokenExpiration() async {
-    final String? token = await getToken();
     // เพิ่มการตรวจสอบ mounted ที่นี่เพื่อหลีกเลี่ยงการใช้ context หลังจาก widget ถูก unmount
     if (!mounted) return;
 
-    if (token != null && !JwtDecoder.isExpired(token)) {
-      var decodedToken = JwtDecoder.decode(token);
+    if (!await checkTokenExpiration()) {
+      final String? token = await getToken();
+      var decodedToken = JwtDecoder.decode(token!);
+
       if (decodedToken['role_id'] == 1) {
         context.read<ProfileBloc>().add(ProfileLoad());
         // ตรวจสอบ mounted อีกครั้งก่อนทำการนำทาง

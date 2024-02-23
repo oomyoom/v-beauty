@@ -50,12 +50,10 @@ class PersonalInfo extends StatelessWidget {
                   title: 'ข้อมูลส่วนตัว',
                   press: () {
                     context.read<ProfileBloc>().add(ProfileEdit());
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage(
-                                  editSection: 'personal',
-                                )));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProfileEditPage(
+                              editSection: 'personal',
+                            )));
                   },
                   labelbutton: 'แก้ไข'),
               Column(
@@ -107,12 +105,10 @@ class ContactInfo extends StatelessWidget {
                   title: 'ข้อมูลติดต่อ',
                   press: () {
                     context.read<ProfileBloc>().add(ProfileEdit());
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage(
-                                  editSection: 'contact',
-                                )));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProfileEditPage(
+                              editSection: 'contact',
+                            )));
                   },
                   labelbutton: 'แก้ไข'),
               Column(
@@ -156,12 +152,10 @@ class DeliveryInfo extends StatelessWidget {
                   title: 'ที่อยู่',
                   press: () {
                     context.read<ProfileBloc>().add(ProfileEdit());
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage(
-                                  editSection: 'delivery',
-                                )));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProfileEditPage(
+                              editSection: 'delivery',
+                            )));
                   },
                   labelbutton: 'แก้ไข'),
               Column(

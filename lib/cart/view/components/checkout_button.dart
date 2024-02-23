@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_beauty/cart/models/cart.dart';
+import 'package:v_beauty/checkout/view/checkout_page.dart';
 
 class CheckoutButton extends StatelessWidget {
   final List<CartItem> cartItems;
@@ -36,7 +37,12 @@ class CheckoutButton extends StatelessWidget {
               ],
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => CheckoutPage(
+                          totalAmount: totalAmount,
+                        ))));
+              },
               style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(
                     Size(MediaQuery.of(context).size.width * 0.1,

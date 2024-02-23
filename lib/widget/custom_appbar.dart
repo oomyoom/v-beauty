@@ -71,22 +71,19 @@ class CustomAppBar extends StatelessWidget {
                     ),
                     readOnly: true,
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => Search(
-                                  searchFunction: (String searchName) async {
-                                    return await repository
-                                        .searchProductByName(searchName);
-                                  },
-                                  onTap: (_) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ProductPage()));
-                                  },
-                                  title: 'ชื่อสินค้า'))));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: ((context) => Search(
+                              searchFunction: (String searchName) async {
+                                return await repository
+                                    .searchProductByName(searchName);
+                              },
+                              onTap: (_) {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProductPage()));
+                              },
+                              title: 'ชื่อสินค้า'))));
                     }),
               ),
             ],
@@ -114,8 +111,7 @@ class ShoppingCartButton extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
-                Navigator.push(
-                  context,
+                Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const CartPage()),
                 );
               },
