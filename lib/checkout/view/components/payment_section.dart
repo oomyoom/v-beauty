@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 
 class PaymentSection extends StatelessWidget {
   const PaymentSection({
@@ -55,14 +57,17 @@ class _HorizontalPaymentMethodPickerState
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> paymentMethods = [
       {
+        "id": 1,
         "name": "Credit Card",
         "icon": Icons.credit_card,
       },
       {
+        "id": 2,
         "name": "PayPal",
         "icon": Icons.account_balance_wallet,
       },
       {
+        "id": 3,
         "name": "Bank Transfer",
         "icon": Icons.account_balance,
       },
@@ -79,6 +84,9 @@ class _HorizontalPaymentMethodPickerState
             onTap: () {
               setState(() {
                 _selectedPaymentMethod = paymentMethods[index]['name'];
+                context
+                    .read<CartBloc>()
+                    .add(CartPayment(paymentMethods[index]['id']));
                 widget.onSelected(_selectedPaymentMethod!);
               });
             },

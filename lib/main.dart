@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
+import 'package:v_beauty/cart/repositories/order_repo.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
@@ -14,13 +15,15 @@ void main() {
   final userRepository = UserRepository();
   final productRepository =
       AllProductRepository(); // Initialize your repository here
+  final orderRepository = OrderRepository();
   runApp(
     AppLifecycleReactor(
       child: MultiRepositoryProvider(
         providers: [
           RepositoryProvider<AllProductRepository>(
               create: (_) => productRepository),
-          RepositoryProvider<UserRepository>(create: (_) => userRepository)
+          RepositoryProvider<UserRepository>(create: (_) => userRepository),
+          RepositoryProvider<OrderRepository>(create: (_) => orderRepository)
         ],
         child: MultiBlocProvider(
           providers: [

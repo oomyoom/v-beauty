@@ -40,6 +40,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     });
 
+    on<CartPayment>((event, emit) {
+      emit(CartState(cartItems: state.cartItems, paymentId: event.paymentId));
+    });
+
     on<CartCleared>((event, emit) {
       emit(const CartState(cartItems: []));
     });

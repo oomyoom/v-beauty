@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:v_beauty/checkout/view/components/cartItem_section.dart';
+import 'package:v_beauty/checkout/view/components/confirm_button.dart';
 import 'package:v_beauty/checkout/view/components/delivery_section.dart';
 import 'package:v_beauty/checkout/view/components/payment_section.dart';
 
@@ -48,21 +51,7 @@ class CheckoutPage extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-              child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.07,
-            color: const Color(0xFFE5C1C5),
-            child: Center(
-              child: Text(
-                'ยืนยันการสั่งซื้อ'.toUpperCase(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ))
+          ConfirmButton(totalAmount: totalAmount)
         ],
       ),
     );

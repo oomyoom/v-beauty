@@ -33,5 +33,13 @@ class CartItemQuantityChanged extends CartEvent {
   List<Object> get props => [productId, quantity];
 }
 
-class CartCleared extends CartEvent {}
+class CartPayment extends CartEvent {
+  final int paymentId;
 
+  CartPayment(this.paymentId);
+
+  @override
+  List<Object> get props => [paymentId];
+}
+
+class CartCleared extends CartEvent {}
