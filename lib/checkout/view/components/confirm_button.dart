@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
-import 'package:v_beauty/order_history/bloc/order_bloc.dart';
 import 'package:v_beauty/order_history/repositories/order_repo.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/utils/session_expired.dart';
@@ -35,9 +34,6 @@ class ConfirmButton extends StatelessWidget {
                       builder: (context) => const ReceiptDialog());
                   await OrderRepository().createOrder(
                       state.paymentId, totalAmount, state.cartItems);
-                  if (!await checkTokenExpiration()) {
-                    context.read<OrderBloc>().add(LoadOrder());
-                  }
                   Future.delayed(const Duration(seconds: 4), () {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const SplashScreen()),
