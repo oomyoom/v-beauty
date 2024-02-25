@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:v_beauty/features/user_features/profile/models/user.dart';
-import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
+import 'package:v_beauty/features/user_features/profile/repositories/user_repo.dart';
 import 'package:v_beauty/utils/token_management.dart';
 
 part 'profile_event.dart';

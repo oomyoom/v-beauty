@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_beauty/order_history/view/pages/orderHistory_page.dart';
 
 class ProfileFeatures extends StatelessWidget {
   const ProfileFeatures({
@@ -19,7 +20,8 @@ class ProfileFeatures extends StatelessWidget {
             Column(
               children: [
                 IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.star_rate_rounded)),
+                    onPressed: () {},
+                    icon: const Icon(Icons.star_rate_rounded)),
                 const Text('การให้คะแนน')
               ],
             ),
@@ -28,7 +30,12 @@ class ProfileFeatures extends StatelessWidget {
             ),
             Column(
               children: [
-                IconButton(onPressed: () {}, icon: const Icon(Icons.history_rounded)),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: ((context) => const OrderHistoryPage())));
+                    },
+                    icon: const Icon(Icons.history_rounded)),
                 const Text('ประวัติคำสั่งซื้อ')
               ],
             )

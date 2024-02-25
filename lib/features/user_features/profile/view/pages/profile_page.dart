@@ -22,17 +22,6 @@ class ProfilePage extends StatelessWidget {
           centerTitle: true,
           elevation: 1,
           backgroundColor: const Color(0xFFE5C1C5),
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.01),
-              child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.manage_accounts,
-                  )),
-            )
-          ],
         ),
         backgroundColor: Colors.grey[200],
         body: BlocConsumer<ProfileBloc, ProfileState>(

@@ -7,6 +7,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/store_features/widgets/store_bottom_tab.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
+import 'package:v_beauty/order_history/bloc/order_bloc.dart';
 import 'package:v_beauty/utils/token_management.dart';
 import 'package:v_beauty/widget/bottom_tab.dart';
 
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (decodedToken['role_id'] == 1) {
         context.read<ProfileBloc>().add(ProfileLoad());
+        context.read<OrderBloc>().add(LoadOrder());
         // ตรวจสอบ mounted อีกครั้งก่อนทำการนำทาง
         if (!mounted) return;
         Navigator.pushReplacement(

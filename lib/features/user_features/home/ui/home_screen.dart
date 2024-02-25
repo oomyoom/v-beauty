@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/widget/custom_appbar.dart';
 import 'package:v_beauty/features/user_features/home/ui/components/product_contain.dart';
-import 'package:v_beauty/features/user_features/profile/view/components/profile_page/profile_logout.dart';
 import 'package:v_beauty/widget/section_title.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,18 +27,6 @@ class HomePage extends StatelessWidget {
           if (state is HomeproductLoadedState) {
             return CustomScrollView(
               slivers: [
-                SliverToBoxAdapter(
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        child: const Text('Logout'),
-                        onTap: () {
-                          showLogoutConfirmationDialog(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
                 SliverPadding(
                   padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.width * 0.04,

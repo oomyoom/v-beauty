@@ -42,7 +42,7 @@ class PaymentSection extends StatelessWidget {
 class HorizontalPaymentMethodPicker extends StatefulWidget {
   const HorizontalPaymentMethodPicker({super.key, required this.onSelected});
 
-  final Function(String) onSelected;
+  final Function(int) onSelected;
 
   @override
   _HorizontalPaymentMethodPickerState createState() =>
@@ -51,7 +51,7 @@ class HorizontalPaymentMethodPicker extends StatefulWidget {
 
 class _HorizontalPaymentMethodPickerState
     extends State<HorizontalPaymentMethodPicker> {
-  String? _selectedPaymentMethod = 'Credit Card'; // ตั้งค่าเริ่มต้น
+  int? _selectedPaymentMethod = 1; // ตั้งค่าเริ่มต้น
 
   @override
   Widget build(BuildContext context) {
@@ -83,10 +83,10 @@ class _HorizontalPaymentMethodPickerState
           return InkWell(
             onTap: () {
               setState(() {
-                _selectedPaymentMethod = paymentMethods[index]['name'];
+                _selectedPaymentMethod = paymentMethods[index]['id'];
                 context
                     .read<CartBloc>()
-                    .add(CartPayment(paymentMethods[index]['id']));
+                    .add(CartPayment(_selectedPaymentMethod!));
                 widget.onSelected(_selectedPaymentMethod!);
               });
             },
@@ -99,14 +99,13 @@ class _HorizontalPaymentMethodPickerState
                 children: <Widget>[
                   Icon(
                     paymentMethods[index]['icon'],
-                    color:
-                        _selectedPaymentMethod == paymentMethods[index]['name']
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
+                    color: _selectedPaymentMethod == paymentMethods[index]['id']
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                   ),
                   Text(paymentMethods[index]['name']),
-                  Radio<String>(
-                    value: paymentMethods[index]['name'],
+                  Radio<int>(
+                    value: paymentMethods[index]['id'],
                     groupValue: _selectedPaymentMethod,
                     onChanged: (value) {
                       setState(() {

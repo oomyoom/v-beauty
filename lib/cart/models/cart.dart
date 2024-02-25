@@ -8,8 +8,8 @@ class CartItem {
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
-      productItem: ProductModal.fromJson(json['productItem']),
-      quantity: json['quantity'],
+      productItem: ProductModal.fromJson(json['Product']),
+      quantity: json['Quantity'],
     );
   }
 

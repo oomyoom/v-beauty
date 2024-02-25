@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
-import 'package:v_beauty/cart/repositories/order_repo.dart';
+import 'package:v_beauty/order_history/bloc/order_bloc.dart';
+import 'package:v_beauty/order_history/repositories/order_repo.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/utils/session_expired.dart';
 import 'package:v_beauty/utils/stripe_service.dart';
@@ -29,12 +30,20 @@ class ConfirmButton extends StatelessWidget {
                 await StripeService.stripePaymentCheckout(
                     state.cartItems, totalAmount, context, onSuccess: () async {
                   print('Success');
+                  showDialog(
+                      context: context,
+                      builder: (context) => const ReceiptDialog());
                   await OrderRepository().createOrder(
                       state.paymentId, totalAmount, state.cartItems);
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => const SplashScreen()),
-                    (Route<dynamic> route) => false, // ไม่เก็บหน้าใดๆ เอาไว้
-                  );
+                  if (!await checkTokenExpiration()) {
+                    context.read<OrderBloc>().add(LoadOrder());
+                  }
+                  Future.delayed(const Duration(seconds: 4), () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const SplashScreen()),
+                      (Route<dynamic> route) => false, // ไม่เก็บหน้าใดๆ เอาไว้
+                    );
+                  });
                   context.read<CartBloc>().add(CartCleared());
                 }, onCancel: () {
                   print('Cancel');
@@ -58,6 +67,34 @@ class ConfirmButton extends StatelessWidget {
               ),
             ));
       },
+    );
+  }
+}
+
+class ReceiptDialog extends StatelessWidget {
+  const ReceiptDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.check_circle,
+              size: MediaQuery.of(context).size.height * 0.08,
+              color: Colors.green,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            Text(
+              'ชำระเงินสำเร็จ',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

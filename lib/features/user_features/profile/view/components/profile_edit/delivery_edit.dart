@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:v_beauty/features/user_features/profile/models/address.dart';
-import 'package:v_beauty/features/user_features/profile/repositories/address_repository.dart';
+import 'package:v_beauty/features/user_features/profile/repositories/address_repo.dart';
 import 'package:v_beauty/widget/custom_textformfield.dart';
 import 'package:v_beauty/widget/search.dart';
 

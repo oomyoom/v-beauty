@@ -59,12 +59,11 @@ class _BottomTabState extends State<BottomTab> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shop_rounded,
+              Icons.shopping_bag_rounded,
             ),
             label: 'Shop',
           ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.abc_rounded), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );

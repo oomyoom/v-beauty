@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
-import 'package:v_beauty/cart/repositories/order_repo.dart';
+import 'package:v_beauty/order_history/bloc/order_bloc.dart';
+import 'package:v_beauty/order_history/repositories/order_repo.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
-import 'package:v_beauty/features/user_features/profile/repositories/user_repository.dart';
+import 'package:v_beauty/features/user_features/profile/repositories/user_repo.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
 import 'package:v_beauty/utils/appstate_observer.dart';
 import 'package:v_beauty/utils/session_expired.dart';
@@ -35,6 +36,8 @@ void main() {
             // BlocProvider(
             //   create: (create) => CategoryBloc(productRepository),
             // ),
+            BlocProvider<OrderBloc>(
+                create: (_) => OrderBloc(orderRepository: orderRepository)),
             BlocProvider<CartBloc>(create: (_) => CartBloc()),
             BlocProvider<ProfileBloc>(
               create: (_) => ProfileBloc(
