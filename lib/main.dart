@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:v_beauty/features/auth/ui/auth_screen.dart';
 import 'package:v_beauty/features/splash/splash_screen.dart';
 import 'package:v_beauty/features/user_features/home/homeproduct_bloc/homeproduct_bloc.dart';
 import 'package:v_beauty/features/user_features/profile/bloc/profile_bloc.dart';
@@ -59,6 +60,7 @@ class MyAppView extends StatelessWidget {
               error: Colors.red,
               outline: Color(0xFF424242)),
         ),
+        // home: AuthPage(),
         home: SplashScreen(
           token: token,
         )
