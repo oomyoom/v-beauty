@@ -29,6 +29,9 @@ class ProfilePage extends StatelessWidget {
             if (state is Unauthenticated) {
               showSessionExpiredSnackbarAndNavigate(context);
             }
+            if (state is ProfileUpdated) {
+              context.read<ProfileBloc>().add(ProfileLoad());
+            }
           },
           builder: (context, state) {
             if (state is ProfileLoading) {
