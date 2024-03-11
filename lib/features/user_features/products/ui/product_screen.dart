@@ -2,29 +2,24 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 import 'package:v_beauty/constant/apiurl.dart';
+import 'package:v_beauty/models/product_data.dart';
+import 'package:v_beauty/rating/view/rating_page.dart';
+import 'package:v_beauty/widget/custom_appbar.dart';
 
 class ProductDetailsPage extends StatefulWidget {
-  int? id;
-  String? pic;
-  String? title;
-  int? price;
-  String? shop;
-  String? filterUrl;
-  ProductDetailsPage(
-      {super.key,
-      this.id,
-      this.pic,
-      this.title,
-      this.price,
-      this.shop,
-      this.filterUrl});
+  final ProductModal product;
+
+  ProductDetailsPage({
+    super.key,
+    required this.product,
+  });
 
   @override
   State<ProductDetailsPage> createState() => ProductDetailsPageState();
@@ -36,13 +31,13 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var select_item = 0;
     return Scaffold(
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
               pinned: true,
+              actions: const [ShoppingCartButton()],
             ),
             SliverToBoxAdapter(
                 child: Padding(
@@ -59,7 +54,8 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.white,
                             boxShadow: [BoxShadow(blurRadius: 10)]),
-                        child: Image(image: NetworkImage(widget.pic ?? '')),
+                        child:
+                            Image(image: NetworkImage(widget.product.image!)),
                         width: MediaQuery.of(context).size.width * 0.55,
                         height: MediaQuery.of(context).size.width * 0.55,
                       ),
@@ -77,7 +73,8 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                               color: Colors.white),
                           width: MediaQuery.of(context).size.width * 0.275,
                           height: MediaQuery.of(context).size.width * 0.275,
-                          child: Image(image: NetworkImage(widget.pic ?? '')),
+                          child:
+                              Image(image: NetworkImage(widget.product.image!)),
                         ),
                       ),
                     ),
@@ -94,7 +91,8 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                               color: Colors.white),
                           width: MediaQuery.of(context).size.width * 0.275,
                           height: MediaQuery.of(context).size.width * 0.275,
-                          child: Image(image: NetworkImage(widget.pic ?? '')),
+                          child:
+                              Image(image: NetworkImage(widget.product.image!)),
                         ),
                       ),
                     )
@@ -109,7 +107,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
               sliver: SliverToBoxAdapter(
                   child: Container(
                 child: Text(
-                  widget.title ?? '',
+                  widget.product.name!,
                   style: TextStyle(fontSize: 30),
                 ),
               )),
@@ -123,18 +121,17 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                 alignment: Alignment.topLeft,
                 child: Row(
                   children: [
-                    const Icon(
-                      IconData(0xe5fd, fontFamily: 'MaterialIcons'),
-                      color: Colors.yellow,
+                    RatingBarIndicator(
+                      rating: widget.product.rating!,
+                      itemBuilder: (context, index) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      itemCount: 5,
+                      itemSize: 22,
                     ),
-                    const Icon(IconData(0xe5fd, fontFamily: 'MaterialIcons'),
-                        color: Colors.yellow),
-                    const Icon(IconData(0xe5fd, fontFamily: 'MaterialIcons'),
-                        color: Colors.yellow),
-                    const Icon(IconData(0xe5fd, fontFamily: 'MaterialIcons'),
-                        color: Colors.yellow),
-                    const Icon(IconData(0xe5fd, fontFamily: 'MaterialIcons')),
-                    Text('(4.0)'), // change to variable later
+                    Text(
+                        '(${widget.product.rating})'), // change to variable later
                     Text(
                       ' | ',
                     ),
@@ -152,7 +149,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                 child: Container(
                   color: Color(0xFFE5C1C5),
                   child: Text(
-                    ' ${widget.price} บาท',
+                    ' ${widget.product.price} บาท',
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
@@ -160,45 +157,8 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
             SliverPadding(
               padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.04,
-              ),
-              sliver: SliverToBoxAdapter(
-                child: Container(
-                  child: Row(
-                    children: [
-                      Text(
-                        'จำนวน ',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      InkWell(
-                        child: Icon(Icons.indeterminate_check_box),
-                        onTap: () {
-                          setState() {
-                            select_item++;
-                          }
-                        },
-                      ),
-                      Text(
-                        '   $select_item   ',
-                        style: TextStyle(fontSize: 10),
-                      ),
-                      InkWell(
-                        child: Icon(Icons.check_box),
-                        onTap: () {
-                          setState(() {
-                            select_item++;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.04,
-                  vertical: MediaQuery.of(context).size.height * 0.03),
+                  vertical: MediaQuery.of(context).size.height * 0.02),
               sliver: SliverToBoxAdapter(
                 child: Container(
                   child: Stack(
@@ -207,7 +167,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                       InkWell(
                         onTap: () async => {
                           print(
-                              'http://${ApiConstants.filterUrl}${widget.filterUrl}'),
+                              'http://${ApiConstants.filterUrl}${widget.product.filterUrl}'),
                           await pickImage(),
                           await filterImage(),
                           showDialog(
@@ -276,13 +236,19 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                     alignment: Alignment.topLeft,
                     children: [
                       InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => RatingPage(
+                                    productId: widget.product.productId!,
+                                  )));
+                        },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.2,
                           height: MediaQuery.of(context).size.width * 0.06,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('ซื้อสินค้า',
+                                Text('ให้คะแนน',
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
@@ -294,9 +260,14 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                       Positioned(
                         left: MediaQuery.of(context).size.width * 0.22,
                         child: InkWell(
+                          onTap: () {
+                            context
+                                .read<CartBloc>()
+                                .add(CartItemAdded(widget.product));
+                          },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.3,
-                            height: MediaQuery.of(context).size.width * 0.06,
+                            height: MediaQuery.of(context).size.height * 0.03,
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -330,7 +301,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                               border:
                                   Border.all(width: 1, color: Colors.black12),
                               color: Colors.white),
-                          width: MediaQuery.of(context).size.width * 0.5,
+                          //width: MediaQuery.of(context).size.width * 0.5,
                           child: Row(
                             children: [
                               Image(
@@ -346,7 +317,10 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.shop ?? '',
+                                    widget.product.name!,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                    overflow: TextOverflow.visible,
                                     style: TextStyle(
                                         fontSize:
                                             MediaQuery.of(context).size.width *
@@ -593,8 +567,10 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
       return;
     }
 
-    var request = http.MultipartRequest('POST',
-        Uri.parse('http://${ApiConstants.filterUrl}${widget.filterUrl}'));
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'http://${ApiConstants.filterUrl}${widget.product.filterUrl}'));
     request.headers['Connection'] = 'keep-alive';
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     var response = await request.send();

@@ -50,7 +50,7 @@ class ProductModal {
         image: json["Image"],
         categoryName: json["CategoryName"],
         filterUrl: json["FilterURL"],
-        rating: json["AverageRating"] ?? 0,
+        rating: (json["AverageRating"] as num?)?.toDouble() ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

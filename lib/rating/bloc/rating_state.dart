@@ -10,7 +10,7 @@ abstract class StarRatingState extends Equatable {
 class StarRatingInitial extends StarRatingState {}
 
 class StarRatingUpdated extends StarRatingState {
-  final int rating;
+  final double rating;
 
   const StarRatingUpdated(this.rating);
 

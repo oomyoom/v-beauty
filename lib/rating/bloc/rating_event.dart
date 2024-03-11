@@ -8,7 +8,7 @@ abstract class StarRatingEvent extends Equatable {
 }
 
 class StarRatingChanged extends StarRatingEvent {
-  final int rating;
+  final double rating;
 
   const StarRatingChanged(this.rating);
 

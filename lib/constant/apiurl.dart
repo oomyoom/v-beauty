@@ -5,5 +5,6 @@ class ApiConstants {
   static const String authUrl = '$baseUrl/auth/login';
   static const String getUser = '$baseUrl/user';
   static const String order = '$baseUrl/order';
+  static const String rating = '$baseUrl/rating';
   static const String filterUrl = '$basefilterUrl/process_image';
 }
