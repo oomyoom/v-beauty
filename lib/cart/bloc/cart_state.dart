@@ -7,5 +7,5 @@ class CartState extends Equatable {
   const CartState({this.cartItems = const [], this.paymentId = 1});
 
   @override
-  List<Object> get props => [cartItems];
+  List<Object> get props => [cartItems, paymentId];
 }
