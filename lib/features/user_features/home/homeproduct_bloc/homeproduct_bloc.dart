@@ -30,8 +30,7 @@ class HomeproductBloc extends Bloc<HomeproductEvent, HomeproductState> {
         final menMakeupProducts = products
             .where((product) => product.categoryName == "Men's Makeup")
             .toList();
-
-        emit(HomeproductLoadedState(
+        emit(HomeproductLoadedState(     
           allProducts: products,
           faceMakeup: faceMakeupProducts,
           eyeMakeup: eyeMakeupProducts,

@@ -19,6 +19,7 @@ class ProductModal {
     int? o;
     String? image;
     String? categoryName;
+    String? filterUrl;
 
     ProductModal({
         this.productId,
@@ -31,6 +32,7 @@ class ProductModal {
         this.o,
         this.image,
         this.categoryName,
+        this.filterUrl,
     });
 
     factory ProductModal.fromJson(Map<String, dynamic> json) => ProductModal(
@@ -44,6 +46,7 @@ class ProductModal {
         o: json["O"],
         image: json["Image"],
         categoryName: json["CategoryName"],
+        filterUrl: json["FilterURL"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -57,5 +60,6 @@ class ProductModal {
         "O": o,
         "Image": image,
         "CategoryName": categoryName,
+        "FilterURL": filterUrl,
     };
 }
