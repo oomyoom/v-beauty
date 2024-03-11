@@ -30,6 +30,7 @@ class ConfirmButton extends StatelessWidget {
                     state.cartItems, totalAmount, context, onSuccess: () async {
                   print('Success');
                   showDialog(
+                      barrierDismissible: false,
                       context: context,
                       builder: (context) => const ReceiptDialog());
                   await OrderRepository().createOrder(

@@ -4,38 +4,41 @@
 
 import 'dart:convert';
 
-List<ProductModal> productModalFromJson(String str) => List<ProductModal>.from(json.decode(str).map((x) => ProductModal.fromJson(x)));
+List<ProductModal> productModalFromJson(String str) => List<ProductModal>.from(
+    json.decode(str).map((x) => ProductModal.fromJson(x)));
 
-String productModalToJson(List<ProductModal> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String productModalToJson(List<ProductModal> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductModal {
-    int? productId;
-    String? name;
-    int? price;
-    int? categoryId;
-    int? r;
-    int? g;
-    int? b;
-    int? o;
-    String? image;
-    String? categoryName;
-    String? filterUrl;
+  int? productId;
+  String? name;
+  int? price;
+  int? categoryId;
+  int? r;
+  int? g;
+  int? b;
+  int? o;
+  String? image;
+  String? categoryName;
+  String? filterUrl;
+  double? rating;
 
-    ProductModal({
-        this.productId,
-        this.name,
-        this.price,
-        this.categoryId,
-        this.r,
-        this.g,
-        this.b,
-        this.o,
-        this.image,
-        this.categoryName,
-        this.filterUrl,
-    });
+  ProductModal(
+      {this.productId,
+      this.name,
+      this.price,
+      this.categoryId,
+      this.r,
+      this.g,
+      this.b,
+      this.o,
+      this.image,
+      this.categoryName,
+      this.filterUrl,
+      this.rating});
 
-    factory ProductModal.fromJson(Map<String, dynamic> json) => ProductModal(
+  factory ProductModal.fromJson(Map<String, dynamic> json) => ProductModal(
         productId: json["ProductID"],
         name: json["ProductName"],
         price: json["Price"],
@@ -46,10 +49,11 @@ class ProductModal {
         o: json["O"],
         image: json["Image"],
         categoryName: json["CategoryName"],
-        filterUrl: json["FilterURL"]
-    );
+        filterUrl: json["FilterURL"],
+        rating: (json["AverageRating"] as num?)?.toDouble() ?? 0,
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "ProductID": productId,
         "ProductName": name,
         "Price": price,
@@ -61,5 +65,6 @@ class ProductModal {
         "Image": image,
         "CategoryName": categoryName,
         "FilterURL": filterUrl,
-    };
+        "AverageRating": rating,
+      };
 }

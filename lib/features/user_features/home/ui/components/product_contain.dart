@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:v_beauty/cart/bloc/cart_bloc.dart';
 import 'package:v_beauty/features/user_features/products/ui/product_screen.dart';
 import 'package:v_beauty/models/product_data.dart';
 
@@ -18,17 +16,11 @@ class ProductContent extends StatelessWidget {
                     horizontal: MediaQuery.of(context).size.width * 0.01),
                 child: InkWell(
                   onTap: () {
-                    context.read<CartBloc>().add(CartItemAdded(product[index]));
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProductDetailsPage(
-                          id: product[index].productId,
-                          pic: product[index].image,
-                          title: product[index].name,
-                          price: product[index].price,
-                          shop: product[index].name,
-                          filterUrl: product[index].filterUrl,
+                          product: product[index],
                         ),
                       ),
                     );
@@ -79,7 +71,7 @@ class ProductContent extends StatelessWidget {
                                       size: 20,
                                     ),
                                     Text(
-                                      '4.8',
+                                      product[index].rating!.toStringAsFixed(1),
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!

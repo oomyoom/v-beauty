@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:v_beauty/cart/view/cart_page.dart';
+import 'package:v_beauty/features/user_features/products/ui/product_screen.dart';
 
 import 'package:v_beauty/widget/search.dart';
 import 'package:v_beauty/cart/bloc/cart_bloc.dart';
-import 'package:v_beauty/product/view/product_page.dart';
 import 'package:v_beauty/repositories/product_api_repo.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -77,11 +77,13 @@ class CustomAppBar extends StatelessWidget {
                                 return await repository
                                     .searchProductByName(searchName);
                               },
-                              onTap: (_) {
+                              onTap: (product) {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ProductPage()));
+                                            ProductDetailsPage(
+                                              product: product,
+                                            )));
                               },
                               title: 'ชื่อสินค้า'))));
                     }),
