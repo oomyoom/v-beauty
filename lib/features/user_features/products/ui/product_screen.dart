@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_unnecessary_containers, sort_child_properties_last, use_build_context_synchronously, unused_field
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_unnecessary_containers, sort_child_properties_last, use_build_context_synchronously, unused_field, unnecessary_string_interpolations
 
 import 'dart:convert';
 import 'dart:io';
@@ -572,7 +572,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
         Uri.parse(
             'http://${ApiConstants.filterUrl}${widget.product.filterUrl}'));
     request.headers['Connection'] = 'keep-alive';
-    request.fields['type'] = 'lipstick';
+    request.fields['type'] = "${widget.product.categoryName!}";
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     var response = await request.send();
     try {
