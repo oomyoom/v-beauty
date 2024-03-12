@@ -572,6 +572,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
         Uri.parse(
             'http://${ApiConstants.filterUrl}${widget.product.filterUrl}'));
     request.headers['Connection'] = 'keep-alive';
+    request.fields['type'] = 'lipstick';
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     var response = await request.send();
     try {
