@@ -46,7 +46,7 @@ def process_image(image,type):
             blur = cv.GaussianBlur(mouth_region, (7, 7), 10)
             combined_img = cv.addWeighted(img, 1, blur, 0.5, 2)
             return combined_img
-@app.route('/process_image',methods=['POST'])
+@app.route('/process_image/lip1',methods=['POST'])
 def process_image_api():
 
     if 'image' not in request.files:
