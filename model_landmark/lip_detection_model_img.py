@@ -32,7 +32,7 @@ def process_image(image,type):
         elif(type=='eyeblow'):
             img, faces = detector.findFaceMesh(image)
             img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
-            coordinates = [faces[0][pt] for pt in detector.Right_eyeBlow if pt<len(faces[0])]
+            coordinates = [faces[0][pt] for pt in detector.right_Eyeblow if pt<len(faces[0])]
             mask = detector.cropMouth(img, coordinates, color=detector.color)
             inverse_mouthmask = cv.bitwise_not(mask)
             inverse_mouthmask = cv.cvtColor(inverse_mouthmask, cv.COLOR_BGR2GRAY)
