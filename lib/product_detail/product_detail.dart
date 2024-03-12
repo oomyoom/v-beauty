@@ -588,6 +588,7 @@ class _pf_detailPageState extends State<pf_detailPage> {
     var request = http.MultipartRequest(
         'POST', Uri.parse('http://192.168.1.105:5000/process_image'));
     request.headers['Connection'] = 'keep-alive';
+    request.fields['type'] = 'lipstick';
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     var response = await request.send();
     try {

@@ -26,7 +26,8 @@ class FaceMeshDetector():
                        321, 375, 375, 291, 61, 185, 185, 40, 40, 39, 39, 37, 37, 0, 0, 267, 267,
                        269, 269, 270, 270, 409, 409, 291, 78, 95, 95, 88, 88, 178, 178, 87, 87, 14,
                        14, 317, 317, 402, 402, 318, 318, 324, 324, 308, 78, 191, 191, 80, 80, 81, ]
-        self.lcheek_center = 50
+        self.right_Eyeblow = [276, 283, 283, 282, 282, 295, 295, 285, 300, 293, 293, 334, 334, 296, 296, 336]
+        self.brush = [143, 116, 123, 147, 213, 192, 214, 212, 216, 206, 203, 129, 209, 217, 114, 128, 233, 232, 231, 230, 229, 228, 31, 226, 35, 143]
         faces = []
         if self.results.multi_face_landmarks:
             for faceLms in self.results.multi_face_landmarks:
@@ -43,7 +44,16 @@ class FaceMeshDetector():
     def cropMouth(self, img, landmarks, color, alpha=0.6):
 
         points = np.array(landmarks)
+        points = points.reshape((-1, 1, 2))
         mask = np.zeros_like(img)
         cv.fillPoly(mask, [points], self.color)
+
+        return mask
+    def cropMouth_White(self, img, landmarks, alpha=0.6):
+
+        points = np.array(landmarks)
+        points = points.reshape((-1, 1, 2))
+        mask = np.zeros_like(img)
+        cv.fillPoly(mask, [points], (255,255,255))
 
         return mask
