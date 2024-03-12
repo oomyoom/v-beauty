@@ -568,9 +568,7 @@ class ProductDetailsPageState extends State<ProductDetailsPage> {
     }
 
     var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'http://${ApiConstants.filterUrl}${widget.product.filterUrl}'));
+        'POST', Uri.parse('http://${ApiConstants.filterUrl}'));
     request.headers['Connection'] = 'keep-alive';
     request.files.add(await http.MultipartFile.fromPath('image', image!.path));
     var response = await request.send();
