@@ -35,7 +35,7 @@ class ConfirmButton extends StatelessWidget {
                       builder: (context) => const ReceiptDialog());
                   await OrderRepository().createOrder(
                       state.paymentId, totalAmount, state.cartItems);
-                  Future.delayed(const Duration(seconds: 4), () {
+                  await Future.delayed(const Duration(seconds: 4), () {
                     Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const SplashScreen()),
                       (Route<dynamic> route) => false, // ไม่เก็บหน้าใดๆ เอาไว้

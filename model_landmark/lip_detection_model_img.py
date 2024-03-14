@@ -9,12 +9,12 @@ from flask import Flask,request,jsonify,send_file
 
 app = Flask(__name__)
 detector = FaceMeshDetector()
-detector.color = (255, 0, 255)
+detector.color = (9,235, 36)
 
 def process_image(image,type):
 
     if image is not None:
-        if(type =='lipstick'):
+        if(type =='Lip Makeup'):
             img,faces=detector.findFaceMesh(image)
             img = cv.cvtColor(img,cv.COLOR_RGB2BGR)
             coordinates = [faces[0][pt] for pt in detector.liparr if pt < len(faces[0])]
@@ -29,7 +29,7 @@ def process_image(image,type):
             blur = cv.GaussianBlur(mouth_region, (7, 7), 10)
             combined_img = cv.addWeighted(img,1,blur,0.5,2)
             return combined_img
-        elif(type=='eyeblow'):
+        elif(type=='Eye Makeup'):
             img, faces = detector.findFaceMesh(image)
             img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
             coordinates = [faces[0][pt] for pt in detector.right_Eyeblow if pt<len(faces[0])]
@@ -44,7 +44,7 @@ def process_image(image,type):
             blur = cv.GaussianBlur(mouth_region, (7, 7), 10)
             combined_img = cv.addWeighted(img, 1, blur, 0.5, 2)
             return combined_img
-        elif(type=='brush'):
+        elif(type=='Face Makeup'):
             detector.color=(111, 31, 51)
             img, faces = detector.findFaceMesh(image)
             img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
